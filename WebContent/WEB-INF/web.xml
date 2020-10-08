@@ -4,8 +4,6 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-  
-  <!-- mapping urls for public -->
   <servlet>
     <servlet-name>PublicIndexController</servlet-name>
     <servlet-class>controllers.publics.PublicIndexController</servlet-class>
@@ -14,7 +12,6 @@
     <servlet-name>PublicIndexController</servlet-name>
     <url-pattern>/index</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>PublicCatController</servlet-name>
     <servlet-class>controllers.publics.PublicCatController</servlet-class>
@@ -23,7 +20,6 @@
     <servlet-name>PublicCatController</servlet-name>
     <url-pattern>/cat</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>PublicDetailController</servlet-name>
     <servlet-class>controllers.publics.PublicDetailController</servlet-class>
@@ -32,7 +28,6 @@
     <servlet-name>PublicDetailController</servlet-name>
     <url-pattern>/detail</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>PublicContactController</servlet-name>
     <servlet-class>controllers.publics.PublicContactController</servlet-class>
@@ -41,8 +36,6 @@
     <servlet-name>PublicContactController</servlet-name>
     <url-pattern>/contact</url-pattern>
   </servlet-mapping>
-  
-  <!-- mapping urls for admin -->
   <servlet>
     <servlet-name>AdminIndexController</servlet-name>
     <servlet-class>controllers.admins.AdminIndexController</servlet-class>
@@ -50,5 +43,37 @@
   <servlet-mapping>
     <servlet-name>AdminIndexController</servlet-name>
     <url-pattern>/admin/index</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AdminIndexCatController</servlet-name>
+    <servlet-class>controllers.admins.cat.AdminIndexCatController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminIndexCatController</servlet-name>
+    <url-pattern>/admin/cat/index</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AdminAddCatController</servlet-name>
+    <servlet-class>controllers.admins.cat.AdminAddCatController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminAddCatController</servlet-name>
+    <url-pattern>/admin/cat/add</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AdminDelCatController</servlet-name>
+    <servlet-class>controllers.admins.cat.AdminDelCatController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminDelCatController</servlet-name>
+    <url-pattern>/admin/cat/del</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AdminEditCatController</servlet-name>
+    <servlet-class>controllers.admins.cat.AdminEditCatController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminEditCatController</servlet-name>
+    <url-pattern>/admin/cat/edit</url-pattern>
   </servlet-mapping>
 </web-app>

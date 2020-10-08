@@ -1,22 +1,29 @@
-package controllers.admins;
+package controllers.admins.cat;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AdminIndexController extends HttpServlet {
+import daos.CatDAO;
+import models.Category;
+
+public class AdminIndexCatController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public AdminIndexController() {
+	public AdminIndexCatController() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("/views/admin/index.jsp").forward(request, response);
+		CatDAO catDao = new CatDAO();
+		List<Category> listCat = catDao.findAll();
+		request.setAttribute("listCat", listCat);
+		request.getRequestDispatcher("/views/admin/cat/index.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
