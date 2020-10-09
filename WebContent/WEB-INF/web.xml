@@ -76,4 +76,36 @@
     <servlet-name>AdminEditCatController</servlet-name>
     <url-pattern>/admin/cat/edit</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>AdminIndexUserController</servlet-name>
+    <servlet-class>controllers.admins.users.AdminIndexUserController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminIndexUserController</servlet-name>
+    <url-pattern>/admin/user/index</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AdminAddUserController</servlet-name>
+    <servlet-class>controllers.admins.users.AdminAddUserController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminAddUserController</servlet-name>
+    <url-pattern>/admin/user/add</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AdminEditUserController</servlet-name>
+    <servlet-class>controllers.admins.users.AdminEditUserController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminEditUserController</servlet-name>
+    <url-pattern>/admin/user/edit</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AdminDelUserController</servlet-name>
+    <servlet-class>controllers.admins.users.AdminDelUserController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminDelUserController</servlet-name>
+    <url-pattern>/admin/user/del</url-pattern>
+  </servlet-mapping>
 </web-app>
