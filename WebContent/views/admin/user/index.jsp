@@ -27,27 +27,25 @@
                             </div>
 							<%
 								if(request.getParameter("msg")!=null){
-									int msg = Integer.parseInt(request.getParameter("msg"));
-									switch(msg){
-										case 0: out.print("<p style='background: yellow; color: red'>Có lỗi trong quá trình xử lý!</p>");
-										break;
-										case 1: out.print("<p style='background: yellow; color: green'>Thêm thành công!</p>");
-										break;
-										case 2: out.print("<p style='background: yellow; color: green'>Sửa thành công!</p>");
-										break;
-										case 3: out.print("<p style='background: yellow; color: green'>Xóa thành công!</p>");
-										break;
-										case 4: out.print("<p style='background: yellow; color: red'>ID không tồn tại!</p>");
-										break;
-										case 5: out.print("<p style='background: yellow; color: red'>Không có quyền thêm!</p>");
-										break;
-										case 6: out.print("<p style='background: yellow; color: red'>Không có quyền sửa!</p>");
-										break;
-										case 7: out.print("<p style='background: yellow; color: red'>Không có quyền xóa!</p>");
-										break;
-									}
-								}
+									String msg = request.getParameter("msg");
+									if("1".equals(msg)){
 							%>
+							<div class="alert alert-success" role="alert">
+								  Thêm người dùng thành công!
+							</div>
+							<%} else if("2".equals(msg)) { %>
+							<div class="alert alert-success" role="alert">
+								  Sửa người dùng thành công!
+							</div>
+							<%} else if("3".equals(msg)) { %>
+							<div class="alert alert-success" role="alert">
+								  Xóa người dùng thành công!
+							</div>
+							<%}else if("0".equals(msg)) { %>
+							<div class="alert alert-danger" role="alert">
+  								Xử lý thất bại!
+							</div>
+							<%}} %>
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>

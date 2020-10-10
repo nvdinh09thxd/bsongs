@@ -76,7 +76,7 @@
                                         <td class="center"><%=name %></td>
                                         <td class="center">
                                             <a href="<%=urlEdit %>" title="" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
-                                            <a href="<%=urlDel %>" title="" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+                                            <a href="<%=urlDel %>" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')" title="" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
                                         </td>
                                     </tr>
 									<%}}} %>

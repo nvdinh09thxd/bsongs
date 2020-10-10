@@ -14,22 +14,30 @@
         					<%
 	        					String username = request.getParameter("username");
 	        					String fullname = request.getParameter("fullname");
-									if(request.getParameter("msg")!=null){
-										int msg = Integer.parseInt(request.getParameter("msg"));
-										switch(msg){
-											case 0: out.print("<p style='background: yellow; color: red'>Có lỗi trong quá trình xử lý!</p>");
-											break;
-											case 1: out.print("<p style='background: yellow; color: red'>Vui lòng nhập username vào!</p>");
-											break;
-											case 2: out.print("<p style='background: yellow; color: red'>Vui lòng nhập password vào!</p>");
-											break;
-											case 3: out.print("<p style='background: yellow; color: red'>Vui lòng nhập fullname vào!</p>");
-											break;
-											case 4: out.print("<p style='background: yellow; color: red'>Bạn nhập username đã tồn tại!</p>");
-											break;
-										}
-									}
+								if(request.getParameter("msg")!=null){
+									String msg = request.getParameter("msg");
+									if("1".equals(msg)){
 							%>
+							<div class="alert alert-danger" role="alert">
+								  Vui lòng nhập username vào!
+							</div>
+							<%} else if("2".equals(msg)) { %>
+							<div class="alert alert-danger" role="alert">
+								  Vui lòng nhập password vào!
+							</div>
+							<%} else if("3".equals(msg)) { %>
+							<div class="alert alert-danger" role="alert">
+								  Vui lòng nhập fullname vào!
+							</div>
+							<%} else if("4".equals(msg)) { %>
+							<div class="alert alert-danger" role="alert">
+								  Bạn nhập username đã tồn tại!
+							</div>
+							<%} else if("0".equals(msg)) { %>
+							<div class="alert alert-danger" role="alert">
+  								Xử lý thất bại!
+							</div>
+							<%}} %>
         <div class="row">
             <div class="col-md-12">
                 <!-- Form Elements -->

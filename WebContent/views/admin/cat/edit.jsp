@@ -25,12 +25,16 @@
                         <div class="alert alert-danger" role="alert">
   								Xử lý thất bại!
 						</div>
-                        <%} %>
+                        <%} else if("1".equals(err)){ %>
+                        <div class="alert alert-danger" role="alert">
+  								Vui lòng nhập name!
+						</div>
+						<%} %>
                             <div class="col-md-12">
                                 <form role="form" method="post" id="form">
                                 <%
-                                if(request.getAttribute("cat")!=null){
-                                	Category cat = (Category) request.getAttribute("cat");
+                                	if(request.getAttribute("cat")!=null){
+                                		Category cat = (Category) request.getAttribute("cat");
                                 %>
                                     <div class="form-group">
                                         <label for="name">Tên danh mục</label>

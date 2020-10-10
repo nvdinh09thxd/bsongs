@@ -35,6 +35,11 @@ public class AdminEditCatController extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("cid"));
 		String name = request.getParameter("name");
 		Category cat = new Category(id, name);
+		request.setAttribute("cat", cat);
+		if("".equals(name)) {
+			request.getRequestDispatcher("/views/admin/cat/edit.jsp?err=1").forward(request, response);
+			return;
+		}
 		int edit = catDao.edit(cat);
 		if (edit > 0) {
 			// thành công
@@ -42,7 +47,6 @@ public class AdminEditCatController extends HttpServlet {
 			return;
 		}
 		// thất bại
-		request.setAttribute("cat", cat);
 		request.getRequestDispatcher("/views/admin/cat/edit.jsp?err=0").forward(request, response);
 	}
 

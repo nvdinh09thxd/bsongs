@@ -78,7 +78,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>AdminIndexUserController</servlet-name>
-    <servlet-class>controllers.admins.users.AdminIndexUserController</servlet-class>
+    <servlet-class>controllers.admins.user.AdminIndexUserController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AdminIndexUserController</servlet-name>
@@ -86,7 +86,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>AdminAddUserController</servlet-name>
-    <servlet-class>controllers.admins.users.AdminAddUserController</servlet-class>
+    <servlet-class>controllers.admins.user.AdminAddUserController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AdminAddUserController</servlet-name>
@@ -94,7 +94,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>AdminEditUserController</servlet-name>
-    <servlet-class>controllers.admins.users.AdminEditUserController</servlet-class>
+    <servlet-class>controllers.admins.user.AdminEditUserController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AdminEditUserController</servlet-name>
@@ -102,7 +102,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>AdminDelUserController</servlet-name>
-    <servlet-class>controllers.admins.users.AdminDelUserController</servlet-class>
+    <servlet-class>controllers.admins.user.AdminDelUserController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AdminDelUserController</servlet-name>
