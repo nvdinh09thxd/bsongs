@@ -14,7 +14,8 @@ public class Song {
 	private String name;
 	private String description;
 	private String detail;
-	private String picture;
 	private Timestamp createAt;
+	private String picture;
+	private int count;
 	private Category cat;
 }

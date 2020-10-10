@@ -37,6 +37,14 @@
     <url-pattern>/contact</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>PublicNotFoundController</servlet-name>
+    <servlet-class>controllers.publics.PublicNotFoundController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PublicNotFoundController</servlet-name>
+    <url-pattern>/404</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>AdminIndexController</servlet-name>
     <servlet-class>controllers.admins.AdminIndexController</servlet-class>
   </servlet>

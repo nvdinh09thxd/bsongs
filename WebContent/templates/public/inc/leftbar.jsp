@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+	<%@page import="java.util.List"%>
+    <%@ page import="java.util.ArrayList"%>
+    <%@ page import="models.Category"%>
+    <%@ page import="daos.CatDAO"%>
+    <%@ page import="models.Song"%>
+    <%@ page import="daos.SongDAO"%>
 <div class="searchform">
   <form id="formsearch" name="formsearch" method="post" action="#">
     <span>
@@ -13,11 +19,16 @@
   <h2 class="star">Danh mục bài hát</h2>
   <div class="clr"></div>
   <ul class="sb_menu">
-    <li><a href="#">Nhạc trẻ</a></li>
-    <li><a href="#">Nhạc trữ tình</a></li>
-    <li><a href="#">Rock Việt</a></li>
-    <li><a href="#">Nhạc Trịnh</a></li>
-    <li><a href="#">Hip Hop Việt</a></li>
+  <%
+  CatDAO catDao = new CatDAO();
+  List<Category> listCat = catDao.findAll();
+  if(listCat.size()>0){
+	  for(Category item : listCat){
+  %>
+    <li><a id="<%=item.getId()%>" href="<%=request.getContextPath()%>/cat?id=<%=item.getId()%>"><%=item.getName() %></a></li>
+    <%
+	  }}
+    %>
   </ul>
 </div>
 
@@ -25,17 +36,16 @@
   <h2 class="star"><span>Bài hát mới</span></h2>
   <div class="clr"></div>
   <ul class="ex_menu">
-    <li><a href="#">Mùa Đã Xa (Single)</a><br />
-      Donec libero. Suspendisse bibendum</li>
-    <li><a href="#">Chúng Ta Là Bạn Bè</a><br />
-      Phasellus suscipit, leo a pharetra</li>
-    <li><a href="#">Có Một Người Để Yêu</a><br />
-      Tellus eleifend magna eget</li>
-    <li><a href="#">Chuyện tình Lan và Điệp</a><br />
-      Curabitur vel urna in tristique</li>
-    <li><a href="#">Xanh tươi Việt Nam</a><br />
-      Cras id urna orbi tincidunt orci ac</li>
-    <li><a href="#">Tuổi hồng</a><br />
-      purus nec placerat bibendum</li>
+  <%
+  SongDAO songDao = new SongDAO();
+  List<Song> listRecentSong = songDao.getItems(6);
+  if(listRecentSong.size()>0){
+	  for(Song item : listRecentSong){
+  %>
+    <li><a href="#"><%=item.getName() %></a><br />
+      <%if(item.getDescription().length()>50) out.print(item.getDescription().substring(0, 50)+"..."); else out.print(item.getDescription()); %></li>
+    <%
+	  }}
+    %>
   </ul>
 </div>

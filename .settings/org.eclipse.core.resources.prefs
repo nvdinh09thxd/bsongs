@@ -4,5 +4,6 @@ encoding//src/controllers/admins/cat/AdminDelCatController.java=UTF-8
 encoding//src/controllers/admins/cat/AdminEditCatController.java=UTF-8
 encoding//src/controllers/admins/user/AdminAddUserController.java=UTF-8
 encoding//src/controllers/admins/user/AdminEditUserController.java=UTF-8
+encoding//src/controllers/publics/PublicDetailController.java=UTF-8
 encoding//src/utils/DBConnectionUtil.java=UTF-8
 encoding//src/utils/StringUtil.java=UTF-8
