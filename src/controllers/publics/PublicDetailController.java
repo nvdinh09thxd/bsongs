@@ -37,7 +37,7 @@ public class PublicDetailController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/404");
 			return;
 		}
-		// tăng view
+		// tăng lượt view
 		HttpSession session = request.getSession();
 		String hasVisited = (String) session.getAttribute("hasVisited: " + id);
 		if (hasVisited == null) {

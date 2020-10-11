@@ -16,7 +16,7 @@ public class ContactDAO extends AbstractDAO {
 			pst.setString(1, item.getName());
 			pst.setString(2, item.getEmail());
 			pst.setString(3, item.getWebsite());
-			pst.setString(4, item.getContent());
+			pst.setString(4, item.getMessage());
 			result = pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

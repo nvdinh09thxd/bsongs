@@ -4,9 +4,9 @@
 <div class="content_resize">
   <div class="mainbar">
   <%
-  @SuppressWarnings("unchecked")
-  List<Song> listSong = (ArrayList<Song>) request.getAttribute("listSong");
-  if(listSong!=null){
+  if(request.getAttribute("listSong")!=null){
+	  @SuppressWarnings("unchecked")
+	  List<Song> listSong = (List<Song>) request.getAttribute("listSong");
 	  int i=0;
 	  for(Song item: listSong){
 		  i++;

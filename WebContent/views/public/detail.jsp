@@ -4,8 +4,9 @@
 <div class="content_resize">
   <div class="mainbar">
   <%
-	  Song itemSong = (Song) request.getAttribute("itemSong");
-	  if(itemSong!=null){
+  	Song itemSong = null;
+	if(request.getAttribute("itemSong")!=null){
+	itemSong = (Song) request.getAttribute("itemSong");
   %>
     <div class="article">
       <h1><%=itemSong.getName() %></h1>
@@ -22,9 +23,10 @@
       <h2>Bài viết liên quan</h2>
       <div class="clr"></div>
       <%
+      if(request.getAttribute("relatedSongs")!=null){
 	      @SuppressWarnings("unchecked")
-	      ArrayList<Song> relatedSongs = (ArrayList<Song>) request.getAttribute("relatedSongs");
-	      if(relatedSongs!=null && relatedSongs.size()>0){
+	      List<Song> relatedSongs = (List<Song>) request.getAttribute("relatedSongs");
+	      if(relatedSongs.size()>0){
 	    	  for(Song item: relatedSongs){
       %>
       <div class="comment"> <a href="<%=request.getContextPath()%>/detail?id=<%=item.getId() %>"><img src="<%=request.getContextPath() %>/templates/public/images/<%=item.getPicture() %>" width="40" height="40" alt="" class="userpic" /></a>
@@ -32,7 +34,7 @@
         <p><%=item.getDescription() %></p>
       </div>
       <%
-    	  }}
+    	  }}}
       %>
     </div>
   </div>

@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ page import="java.util.List"%>
-<%@ page import="java.util.ArrayList"%>
-    <%@ page import="models.Category"%>
-    <%@ page import="daos.CatDAO"%>
-    <%@ page import="models.Song"%>
-    <%@ page import="daos.SongDAO"%>
+<%@ page import="models.Category"%>
+<%@ page import="daos.CatDAO"%>
+<%@ page import="models.Song"%>
+<%@ page import="daos.SongDAO"%>
 <!DOCTYPE html>
 <html>
 <head>
