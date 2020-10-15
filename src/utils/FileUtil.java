@@ -1,6 +1,13 @@
 package utils;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
+
+import constants.GlobalConstant;
 
 public class FileUtil {
 
@@ -9,7 +16,7 @@ public class FileUtil {
 		if (!fileName.isEmpty()) {
 			String[] arrImg = fileName.split("\\.");
 			String duoiFileImg = arrImg[arrImg.length - 1];
-			
+
 			for (int i = 0; i < (arrImg.length - 1); i++) {
 				if (i == 0) {
 					nameFile = arrImg[i];
@@ -29,6 +36,23 @@ public class FileUtil {
 			}
 		}
 		return null;
+	}
+
+	// Method upload file
+	public static String upload(String nameInput, HttpServletRequest request) throws IOException, ServletException {
+		Part part = request.getPart("picture");
+		String fileName = rename(part.getSubmittedFileName());
+
+		if (!"".equals(fileName)) {
+			String dirPath = request.getServletContext().getRealPath("") + GlobalConstant.DIR_UPLOAD;
+			File saveDir = new File(dirPath);
+			if (!saveDir.exists()) {
+				saveDir.mkdirs();
+			}
+			String filePath = dirPath + File.separator + fileName;
+			part.write(filePath);
+		}
+		return fileName;
 	}
 
 }

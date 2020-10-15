@@ -9,25 +9,27 @@ import models.Song;
 import utils.DBConnectionUtil;
 
 public class SongDAO extends AbstractDAO {
+
 	public List<Song> findAll() {
 		con = DBConnectionUtil.getConnection();
-		String sql = "SELECT s.*, c.name AS cname FROM songs s JOIN categories c ON s.cat_id = c.id ORDER BY id DESC";
-		List<Song> listItems = new ArrayList<>();
+		String sql = "SELECT s.*, c.name AS cname FROM songs s "
+				+ "JOIN categories c ON s.cat_id = c.id ORDER BY s.id DESC";
+		List<Song> list = new ArrayList<>();
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
-				Song ObjItem = new Song(rs.getInt("id"), rs.getString("name"), rs.getString("preview_text"),
+				Song song = new Song(rs.getInt("id"), rs.getString("name"), rs.getString("preview_text"),
 						rs.getString("detail_text"), rs.getTimestamp("date_create"), rs.getString("picture"),
 						rs.getInt("counter"), new Category(rs.getInt("cat_id"), rs.getString("cname")));
-				listItems.add(ObjItem);
+				list.add(song);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			DBConnectionUtil.close(rs, st, con);
 		}
-		return listItems;
+		return list;
 	}
 
 	public List<Song> getItems(int number) {
@@ -131,5 +133,25 @@ public class SongDAO extends AbstractDAO {
 			DBConnectionUtil.close(rs, pst, con);
 		}
 		return listItems;
+	}
+
+	public int add(Song song) {
+		int result = 0;
+		con = DBConnectionUtil.getConnection();
+		String sql = "INSERT INTO songs (name, preview_text, detail_text, picture, cat_id) VALUES (?, ?, ?, ?, ?)";
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setString(1, song.getName());
+			pst.setString(2, song.getDescription());
+			pst.setString(3, song.getDetail());
+			pst.setString(4, song.getPicture());
+			pst.setInt(5, song.getCat().getId());
+			result = pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionUtil.close(pst, con);
+		}
+		return result;
 	}
 }

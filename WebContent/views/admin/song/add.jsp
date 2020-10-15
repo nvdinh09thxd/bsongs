@@ -1,4 +1,6 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@page import="models.Category"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ include file="/templates/admin/inc/header.jsp" %>
 <%@ include file="/templates/admin/inc/leftbar.jsp" %>
@@ -26,11 +28,16 @@
                                     <div class="form-group">
                                         <label for="category">Danh mục bài hát</label>
                                         <select id="category" name="category" class="form-control">
-	                                        <option value="1">Option 1</option>
-											<option value="2">Option 2</option>
-											<option value="3" selected>Option 3</option>
-											<option value="4">Option 4</option>
-											<option value="5">Option 5</option>
+                                        <%
+                                        if(request.getAttribute("listCat")!=null) {
+                                        	List<Category> listCat = (List<Category>) request.getAttribute("listCat");
+                                        	if(listCat.size()>0){
+                                        		for(Category cat : listCat){
+                                        %>
+	                                        <option value="<%=cat.getId()%>"><%=cat.getName() %></option>
+                                        <%
+                                       		}}}
+                                        %>
                                         </select>
                                     </div>
                                     <div class="form-group">

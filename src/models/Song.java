@@ -18,4 +18,14 @@ public class Song {
 	private String picture;
 	private int count;
 	private Category cat;
+
+	public Song(String name, String description, String detail, String picture, Category cat) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.detail = detail;
+		this.picture = picture;
+		this.cat = cat;
+	}
+
 }

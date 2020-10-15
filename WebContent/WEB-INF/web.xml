@@ -116,4 +116,20 @@
     <servlet-name>AdminDelUserController</servlet-name>
     <url-pattern>/admin/user/del</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>AdminIndexSongController</servlet-name>
+    <servlet-class>controllers.admins.song.AdminIndexSongController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminIndexSongController</servlet-name>
+    <url-pattern>/admin/song/index</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AdminAddSongController</servlet-name>
+    <servlet-class>controllers.admins.song.AdminAddSongController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminAddSongController</servlet-name>
+    <url-pattern>/admin/song/add</url-pattern>
+  </servlet-mapping>
 </web-app>
