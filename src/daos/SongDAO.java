@@ -76,10 +76,10 @@ public class SongDAO extends AbstractDAO {
 		return listItems;
 	}
 
-	public Song findItem(int id) {
-		con = DBConnectionUtil.getConnection();
-		String sql = "SELECT s.*, c.name AS cname FROM songs s JOIN categories c ON s.cat_id = c.id WHERE s.id=?";
+	public Song findOne(int id) {
 		Song items = null;
+		con = DBConnectionUtil.getConnection();
+		String sql = "SELECT s.*, c.name AS cname FROM songs s JOIN categories c ON s.cat_id = c.id WHERE s.id = ?";
 		try {
 			pst = con.prepareStatement(sql);
 			pst.setInt(1, id);
@@ -146,6 +146,43 @@ public class SongDAO extends AbstractDAO {
 			pst.setString(3, song.getDetail());
 			pst.setString(4, song.getPicture());
 			pst.setInt(5, song.getCat().getId());
+			result = pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionUtil.close(pst, con);
+		}
+		return result;
+	}
+
+	public int del(int id) {
+		int result = 0;
+		con = DBConnectionUtil.getConnection();
+		String sql = "DELETE FROM songs WHERE id = ?";
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setInt(1, id);
+			result = pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionUtil.close(pst, con);
+		}
+		return result;
+	}
+
+	public int edit(Song itemSong) {
+		int result = 0;
+		con = DBConnectionUtil.getConnection();
+		String sql = "UPDATE songs SET name = ?, preview_text = ?, detail_text = ?, picture = ?, cat_id = ? WHERE id = ?";
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setString(1, itemSong.getName());
+			pst.setString(2, itemSong.getDescription());
+			pst.setString(3, itemSong.getDetail());
+			pst.setString(4, itemSong.getPicture());
+			pst.setInt(5, itemSong.getCat().getId());
+			pst.setInt(6, itemSong.getId());
 			result = pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -15,7 +15,13 @@
       <h2><a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>" title="<%=item.getName() %>"><%=item.getName() %></a></h2>
       <p class="infopost">Ngày đăng: <%=item.getCreateAt() %>. Lượt xem: <%=item.getCount() %> <a href="#" class="com"><span><%=i %></span></a></p>
       <div class="clr"></div>
-      <div class="img"><img src="<%=request.getContextPath() %>/templates/public/images/<%=item.getPicture() %>" width="177" height="213" alt="<%=item.getPicture() %>" class="fl" /></div>
+      <div class="img">
+     	<%if(!"".equals(item.getPicture())){ %>
+      	<img src="<%=request.getContextPath() %>/uploads/images/<%=item.getPicture() %>" width="177" height="213" alt="<%=item.getPicture() %>" class="fl" />
+      	<%}else{ %>
+      	<img src="<%=request.getContextPath() %>/uploads/images/no-image.jpg" width="177" height="213" alt="<%=item.getPicture() %>" class="fl" />
+      	<%} %>
+      </div>
       <div class="post_content">
         <p><%=item.getDescription() %></p>
         <p class="spec"><a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>" class="rm">Chi tiết &raquo;</a></p>

@@ -49,6 +49,27 @@ public class UserDAO extends AbstractDAO {
 		}
 		return item;
 	}
+	
+	public User findUsernameAndPassword(String username, String password) {
+		con = DBConnectionUtil.getConnection();
+		String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+		User item = null;
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setString(1, username);
+			pst.setString(2, password);
+			rs = pst.executeQuery();
+			if (rs.next()) {
+				item = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"),
+						rs.getString("fullname"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return item;
+	}
 
 	public int addItem(User item) {
 		int result = 0;

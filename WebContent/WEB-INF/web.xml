@@ -132,4 +132,36 @@
     <servlet-name>AdminAddSongController</servlet-name>
     <url-pattern>/admin/song/add</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>AdminEditSongController</servlet-name>
+    <servlet-class>controllers.admins.song.AdminEditSongController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminEditSongController</servlet-name>
+    <url-pattern>/admin/song/edit</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AdminDelSongController</servlet-name>
+    <servlet-class>controllers.admins.song.AdminDelSongController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminDelSongController</servlet-name>
+    <url-pattern>/admin/song/del</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>LoginController</servlet-name>
+    <servlet-class>controllers.auth.LoginController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginController</servlet-name>
+    <url-pattern>/auth/login</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>LogoutController</servlet-name>
+    <servlet-class>controllers.auth.LogoutController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutController</servlet-name>
+    <url-pattern>/auth/logout</url-pattern>
+  </servlet-mapping>
 </web-app>

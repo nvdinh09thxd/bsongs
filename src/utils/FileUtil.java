@@ -40,9 +40,10 @@ public class FileUtil {
 
 	// Method upload file
 	public static String upload(String nameInput, HttpServletRequest request) throws IOException, ServletException {
-		Part part = request.getPart("picture");
+		Part part = request.getPart(nameInput);
 		String fileName = rename(part.getSubmittedFileName());
 
+		// Thực hiện upload ảnh
 		if (!"".equals(fileName)) {
 			String dirPath = request.getServletContext().getRealPath("") + GlobalConstant.DIR_UPLOAD;
 			File saveDir = new File(dirPath);
@@ -55,4 +56,14 @@ public class FileUtil {
 		return fileName;
 	}
 
+	public static boolean delFile(String fileName, HttpServletRequest request) {
+		if (!"".equals(fileName)) {
+			String filePath = request.getServletContext().getRealPath("")
+					+ GlobalConstant.DIR_UPLOAD + File.separator
+					+ fileName;
+			File file = new File(filePath);
+			return file.delete();
+		}
+		return false;
+	}
 }

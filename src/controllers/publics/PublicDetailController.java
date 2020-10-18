@@ -32,7 +32,7 @@ public class PublicDetailController extends HttpServlet {
 			return;
 		}
 
-		Song itemSong = songDao.findItem(id);
+		Song itemSong = songDao.findOne(id);
 		if (itemSong == null) {
 			response.sendRedirect(request.getContextPath() + "/404");
 			return;

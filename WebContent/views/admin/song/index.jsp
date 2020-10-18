@@ -40,7 +40,19 @@
 							<div class="alert alert-success" role="alert">
 								  Thêm bài hát thành công!
 							</div>
-							<%}}%>
+							<%} else if ("2".equals(msg)) {%>
+								<div class="alert alert-success" role="alert">
+								  Sửa bài hát thành công!
+							</div>
+							<%} else if ("3".equals(msg)) {%>
+								<div class="alert alert-success" role="alert">
+								  Xóa bài hát thành công!
+							</div>
+							<%} else if ("0".equals(msg)) {%>
+								<div class="alert alert-danger" role="alert">
+								  Xóa bài hát thất bại!
+							</div>
+							<%}} %>
         <hr />
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
@@ -59,6 +71,8 @@
                                 	List<Song> listSong = (List<Song>) request.getAttribute("listSong");
                                 	if(listSong.size()>0){
                                 		for(Song song: listSong){
+                                			String urlEdit = request.getContextPath()+"/admin/song/edit?sid="+song.getId();
+                                			String urlDel = request.getContextPath()+"/admin/song/del?sid="+song.getId();
                                 %>                                
                                     <tr>
                                         <td><%=song.getId() %></td>
@@ -77,8 +91,8 @@
                                         <%} %>
                                         </td>
                                         <td class="center">
-                                            <a href="" title="" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
-                                            <a href="" title="" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+                                            <a href="<%=urlEdit %>" title="Sửa" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
+                                            <a href="<%=urlDel %>" title="Xóa" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')"><i class="fa fa-pencil"></i> Xóa</a>
                                         </td>
                                     </tr>
 									<%}}} %>
