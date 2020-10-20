@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import daos.SongDAO;
 import models.Category;
 import models.Song;
+import utils.AuthUtil;
 import utils.FileUtil;
 
 @MultipartConfig
@@ -26,6 +27,10 @@ public class AdminEditSongController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		int songId = 0;
 		try {
 			songId = Integer.parseInt(request.getParameter("sid"));
@@ -42,6 +47,10 @@ public class AdminEditSongController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html");

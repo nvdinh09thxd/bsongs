@@ -10,7 +10,7 @@ if(session.getAttribute("userLogin")!=null){
                 <img src="<%=request.getContextPath() %>/templates/admin/assets/img/find_user.png" class="user-image img-responsive" />
             </li>
             <li>
-                <a id="index" href=""><i class="fa fa-dashboard fa-3x"></i> Trang chủ</a>
+                <a id="index" href="<%=request.getContextPath()%>/admin/index"><i class="fa fa-dashboard fa-3x"></i> Trang chủ</a>
             </li>
             <li>
                 <a id="category" href="<%=request.getContextPath()%>/admin/cat/index"><i class="fa fa-list fa-3x"></i> Quản lý danh mục</a>

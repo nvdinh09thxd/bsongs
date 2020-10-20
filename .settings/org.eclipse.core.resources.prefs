@@ -6,6 +6,7 @@ encoding//src/controllers/admins/song/AdminAddSongController.java=UTF-8
 encoding//src/controllers/admins/song/AdminDelSongController.java=UTF-8
 encoding//src/controllers/admins/song/AdminEditSongController.java=UTF-8
 encoding//src/controllers/admins/user/AdminAddUserController.java=UTF-8
+encoding//src/controllers/admins/user/AdminDelUserController.java=UTF-8
 encoding//src/controllers/admins/user/AdminEditUserController.java=UTF-8
 encoding//src/controllers/auth/LoginController.java=UTF-8
 encoding//src/controllers/auth/LogoutController.java=UTF-8

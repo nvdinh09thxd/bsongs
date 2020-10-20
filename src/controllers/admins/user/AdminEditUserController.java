@@ -7,9 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import daos.UserDAO;
 import models.User;
+import utils.AuthUtil;
 
 public class AdminEditUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -22,6 +24,10 @@ public class AdminEditUserController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if (!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath() + "/auth/login");
+			return;
+		}
 		int id = 0;
 		try {
 			id = Integer.parseInt(request.getParameter("id"));
@@ -29,17 +35,41 @@ public class AdminEditUserController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/admin/user/index?msg=4");
 			return;
 		}
-		User itemUser = userDao.getItem(id);
-		request.setAttribute("itemUser", itemUser);
-		RequestDispatcher rd = request.getRequestDispatcher("/views/admin/user/edit.jsp");
-		rd.forward(request, response);
+		HttpSession session = request.getSession();
+		User userLogin = (User) session.getAttribute("userLogin");
+		if ("admin".equals(userLogin.getUsername()) || (id == userLogin.getId())) {
+			// chỉ có admin hoặc chính người dùng đó đăng nhập mới được phép sửa
+			User itemUser = userDao.getItem(id);
+			if (itemUser != null) {
+				request.setAttribute("itemUser", itemUser);
+				RequestDispatcher rd = request.getRequestDispatcher("/views/admin/user/edit.jsp");
+				rd.forward(request, response);
+				return;
+			} else {
+				response.sendRedirect(request.getContextPath() + "/admin/user/index?msg=4");
+				return;
+			}
+
+		} else {
+			// không có quyền
+			response.sendRedirect(request.getContextPath() + "/admin/user/index?msg=5");
+			return;
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if (!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath() + "/auth/login");
+			return;
+		}
 		request.setCharacterEncoding("utf-8");
 		int id = Integer.parseInt(request.getParameter("id"));
 
+		HttpSession session = request.getSession();
+		User userLogin = (User) session.getAttribute("userLogin");
+		if ("admin".equals(userLogin.getUsername()) || (id == userLogin.getId())) {
+			// chỉ có admin hoặc chính người dùng đó đăng nhập mới được phép sửa
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			String fullname = request.getParameter("fullname");
@@ -59,7 +89,9 @@ public class AdminEditUserController extends HttpServlet {
 				rd.forward(request, response);
 				return;
 			}
-			if (userDao.haveUser(username)) {
+			User user = userDao.getItem(id);
+			// Kiểm tra trùng username
+			if (userDao.haveUser(username) && !username.equals(user.getUsername())) {
 				RequestDispatcher rd = request.getRequestDispatcher("/views/admin/user/edit.jsp?msg=4");
 				rd.forward(request, response);
 				return;
@@ -73,6 +105,11 @@ public class AdminEditUserController extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("/views/admin/user/edit.jsp?msg=0");
 				rd.forward(request, response);
 			}
+		} else {
+			// không có quyền
+			response.sendRedirect(request.getContextPath() + "/admin/user/index?msg=5");
+			return;
+		}
 	}
 
 }

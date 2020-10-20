@@ -13,6 +13,7 @@ import daos.CatDAO;
 import daos.SongDAO;
 import models.Category;
 import models.Song;
+import utils.AuthUtil;
 import utils.FileUtil;
 
 @MultipartConfig
@@ -29,6 +30,10 @@ public class AdminAddSongController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		List<Category> listCat = catDao.findAll();
 		request.setAttribute("listCat", listCat);
 		request.getRequestDispatcher("/views/admin/song/add.jsp").forward(request, response);
@@ -36,6 +41,10 @@ public class AdminAddSongController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html");

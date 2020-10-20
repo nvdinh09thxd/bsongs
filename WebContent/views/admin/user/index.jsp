@@ -45,6 +45,10 @@
 							<div class="alert alert-danger" role="alert">
 								  Người dùng không tồn tại!
 							</div>
+							<%} else if("5".equals(msg)) { %>
+							<div class="alert alert-danger" role="alert">
+								  Không có quyền!
+							</div>
 							<%}else if("0".equals(msg)) { %>
 							<div class="alert alert-danger" role="alert">
   								Xử lý thất bại!
@@ -65,15 +69,28 @@
 	                                	List<User> listUsers = (List<User>) request.getAttribute("listUsers");
 	                                	if(listUsers!=null && listUsers.size()>0){
 	                                		for(User objItem : listUsers){
+	                                			String urlEdit = request.getContextPath() + "/admin/user/edit?id=" + objItem.getId();
+	                                			String urlDel = request.getContextPath() + "/admin/user/del?id=" + objItem.getId();
                                 %>
                                     <tr>
                                         <td><%=objItem.getId() %></td>
                                         <td class="center"><%=objItem.getUsername() %></td>
                                         <td class="center"><%=objItem.getFullname() %></td>
+                                        <%
+	                                        User userLogin = (User) session.getAttribute("userLogin");
+	                                        if("admin".equals(userLogin.getUsername())){
+                                        %>
                                         <td class="center">
-                                            <a href="<%=request.getContextPath() %>/admin/user/edit?id=<%=objItem.getId() %>" title="Sửa" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
-                                            <a href="<%=request.getContextPath() %>/admin/user/del?id=<%=objItem.getId() %>" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')" title="Xóa" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+                                            <a href="<%=urlEdit%>" title="Sửa" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
+                                            <a href="<%=urlDel%>" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')" title="Xóa" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
                                         </td>
+                                        <%} else { %>
+                                        <td class="center">
+                                        <%if(userLogin.getId()==objItem.getId()){ %>
+                                            <a href="<%=urlEdit%>" title="Sửa" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
+                                        <%} %>
+                                        </td>
+                                        <%} %>
                                     </tr>
 									<%}} else {
 										out.print("Khong co du lieu!");

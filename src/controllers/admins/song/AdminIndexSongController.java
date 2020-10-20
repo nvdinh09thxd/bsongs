@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import daos.SongDAO;
 import models.Song;
+import utils.AuthUtil;
 
 public class AdminIndexSongController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -22,6 +23,10 @@ public class AdminIndexSongController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		List<Song> listSong = songDao.findAll();
 		request.setAttribute("listSong", listSong);
 		request.getRequestDispatcher("/views/admin/song/index.jsp").forward(request, response);

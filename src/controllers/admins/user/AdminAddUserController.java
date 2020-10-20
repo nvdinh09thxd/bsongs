@@ -7,9 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import daos.UserDAO;
 import models.User;
+import utils.AuthUtil;
 
 public class AdminAddUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -22,6 +24,20 @@ public class AdminAddUserController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if (!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath() + "/login");
+			return;
+		}
+		HttpSession session = request.getSession();
+		User userLogin = (User) session.getAttribute("userLogin");
+
+		// chỉ admin mới được thêm người dùng
+		if (!"admin".equals(userLogin.getUsername())) {
+			// không được phép
+			response.sendRedirect(request.getContextPath() + "/admin/user/index?msg=5");
+			return;
+		}
+
 		RequestDispatcher rd = request.getRequestDispatcher("/views/admin/user/add.jsp");
 		rd.forward(request, response);
 	}

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import daos.CatDAO;
+import utils.AuthUtil;
 
 public class AdminDelCatController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -18,7 +19,10 @@ public class AdminDelCatController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		CatDAO catDao = new CatDAO();
 		int id = Integer.parseInt(request.getParameter("cid"));
 		int add = catDao.del(id);

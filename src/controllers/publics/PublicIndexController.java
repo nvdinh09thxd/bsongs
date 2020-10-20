@@ -41,11 +41,6 @@ public class PublicIndexController extends HttpServlet {
 		request.setAttribute("currentPage", currentPage);
 		RequestDispatcher rd = request.getRequestDispatcher("/views/public/index.jsp");
 		rd.forward(request, response);
-//		List<Song> listSong = songDao.findAll();
-//		request.setAttribute("listSong", listSong);
-//
-//		RequestDispatcher rd = request.getRequestDispatcher("/views/public/index.jsp");
-//		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

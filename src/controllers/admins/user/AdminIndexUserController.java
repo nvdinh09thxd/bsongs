@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import daos.UserDAO;
 import models.User;
+import utils.AuthUtil;
 
 public class AdminIndexUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -21,6 +22,10 @@ public class AdminIndexUserController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		UserDAO userDao = new UserDAO();
 		List<User> listUsers = userDao.findAll();
 		request.setAttribute("listUsers", listUsers);

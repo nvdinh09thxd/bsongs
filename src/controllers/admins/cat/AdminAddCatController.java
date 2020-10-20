@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import daos.CatDAO;
 import models.Category;
+import utils.AuthUtil;
 
 public class AdminAddCatController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -19,11 +20,19 @@ public class AdminAddCatController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		request.getRequestDispatcher("/views/admin/cat/add.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html");

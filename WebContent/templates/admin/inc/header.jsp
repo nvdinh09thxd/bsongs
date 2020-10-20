@@ -1,3 +1,4 @@
+<%@page import="models.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <!DOCTYPE html>
@@ -27,8 +28,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">VinaEnter Edu</a>
+                <a class="navbar-brand" href="<%=request.getContextPath() %>/admin/index">VinaEnter Edu</a>
             </div>
-            <div style="color: white;padding: 15px 50px 5px 50px;float: right;font-size: 16px;"> Xin chào, <b>Admin</b> &nbsp; <a href="<%=request.getContextPath() %>/auth/logout" class="btn btn-danger square-btn-adjust">Đăng xuất</a> </div>
+            <%
+            	if(session.getAttribute("userLogin")!=null){
+            		User userLogin = (User) session.getAttribute("userLogin");
+            %>
+            <div style="color: white;padding: 15px 50px 5px 50px;float: right;font-size: 16px;"> Xin chào, <b><%=userLogin.getFullname() %></b> &nbsp; <a href="<%=request.getContextPath() %>/auth/logout" class="btn btn-danger square-btn-adjust">Đăng xuất</a> </div>
+            <%} else { %>
+            <div style="color: white;padding: 15px 50px 5px 50px;float: right;font-size: 16px;"> Xin chào, <b>Khách</b> &nbsp; <a href="<%=request.getContextPath() %>/auth/login" class="btn btn-danger square-btn-adjust">Đăng nhập</a> </div>
+            <%} %>
         </nav>
         <!-- /. NAV TOP  -->

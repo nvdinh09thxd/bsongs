@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import daos.CatDAO;
 import models.Category;
+import utils.AuthUtil;
 
 public class AdminIndexCatController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -20,6 +21,10 @@ public class AdminIndexCatController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		CatDAO catDao = new CatDAO();
 		List<Category> listCat = catDao.findAll();
 		request.setAttribute("listCat", listCat);
