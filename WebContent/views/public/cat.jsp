@@ -22,17 +22,15 @@
   	  int i=0;
   	  for(Song item: listSongByCategory){
   		  i++;
+  		String urlPicture = request.getContextPath() + "/uploads/images/";
+  		urlPicture += !"".equals(item.getPicture())? item.getPicture() : "no-image.jpg";
     %>
     <div class="article">
       <h2><a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>" title="<%=item.getName() %>"><%=item.getName() %></a></h2>
       <p class="infopost">Ngày đăng: <%=item.getCreateAt() %>. Lượt xem: <%=item.getCount() %> <a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>" class="com"><span><%=i %></span></a></p>
       <div class="clr"></div>
       <div class="img">
-      	<%if(!"".equals(item.getPicture())){ %>
-      	<img src="<%=request.getContextPath() %>/uploads/images/<%=item.getPicture() %>" width="177" height="213" alt="<%=item.getPicture() %>" class="fl" />
-      	<%}else{ %>
-      	<img src="<%=request.getContextPath() %>/uploads/images/no-image.jpg" width="177" height="213" alt="<%=item.getPicture() %>" class="fl" />
-      	<%} %>
+      	<img src="<%=urlPicture %>" width="177" height="213" alt="<%=urlPicture %>" class="fl" />
 	  </div>
       <div class="post_content">
         <p><%=item.getDescription() %></p>

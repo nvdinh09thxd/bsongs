@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import constants.GlobalConstant;
 import daos.SongDAO;
 import models.Song;
 
@@ -23,11 +24,28 @@ public class PublicIndexController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<Song> listSong = songDao.findAll();
+		int numberOfItems = songDao.numberOfItems();
+		int numberOfPages = (int) Math.ceil((float) numberOfItems / GlobalConstant.NUMBER_PER_PAGE);
+		int currentPage = 1;
+		try {
+			currentPage = Integer.parseInt(request.getParameter("page"));
+		} catch (NumberFormatException e) {
+		}
+		if (currentPage > numberOfPages || currentPage < 1) {
+			currentPage = 1;
+		}
+		int offset = (currentPage - 1) * GlobalConstant.NUMBER_PER_PAGE;
+		List<Song> listSong = songDao.getItemPagination(offset);
 		request.setAttribute("listSong", listSong);
-
+		request.setAttribute("numberOfPages", numberOfPages);
+		request.setAttribute("currentPage", currentPage);
 		RequestDispatcher rd = request.getRequestDispatcher("/views/public/index.jsp");
 		rd.forward(request, response);
+//		List<Song> listSong = songDao.findAll();
+//		request.setAttribute("listSong", listSong);
+//
+//		RequestDispatcher rd = request.getRequestDispatcher("/views/public/index.jsp");
+//		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

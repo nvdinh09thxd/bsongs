@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import constants.GlobalConstant;
 import models.Category;
 import models.Song;
 import utils.DBConnectionUtil;
@@ -190,5 +191,46 @@ public class SongDAO extends AbstractDAO {
 			DBConnectionUtil.close(pst, con);
 		}
 		return result;
+	}
+
+	public int numberOfItems() {
+		con = DBConnectionUtil.getConnection();
+		String sql = "SELECT COUNT(*) AS count FROM songs";
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			if (rs.next()) {
+				int count = rs.getInt("count");
+				return count;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionUtil.close(rs, st, con);
+		}
+		return 0;
+	}
+
+	public List<Song> getItemPagination(int offset) {
+		con = DBConnectionUtil.getConnection();
+		String sql = "SELECT s.*, c.name AS cname FROM songs s JOIN categories c ON s.cat_id = c.id ORDER BY id DESC LIMIT ?, ?";
+		List<Song> listItems = new ArrayList<>();
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setInt(1, offset);
+			pst.setInt(2, GlobalConstant.NUMBER_PER_PAGE);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				Song ObjItem = new Song(rs.getInt("id"), rs.getString("name"), rs.getString("preview_text"),
+						rs.getString("detail_text"), rs.getTimestamp("date_create"), rs.getString("picture"),
+						rs.getInt("counter"), new Category(rs.getInt("cat_id"), rs.getString("cname")));
+				listItems.add(ObjItem);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return listItems;
 	}
 }

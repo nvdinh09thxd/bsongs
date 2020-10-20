@@ -41,6 +41,10 @@
 							<div class="alert alert-success" role="alert">
 								  Xóa người dùng thành công!
 							</div>
+							<%} else if("4".equals(msg)) { %>
+							<div class="alert alert-danger" role="alert">
+								  Người dùng không tồn tại!
+							</div>
 							<%}else if("0".equals(msg)) { %>
 							<div class="alert alert-danger" role="alert">
   								Xử lý thất bại!

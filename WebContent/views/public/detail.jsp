@@ -28,14 +28,12 @@
 	      List<Song> relatedSongs = (List<Song>) request.getAttribute("relatedSongs");
 	      if(relatedSongs.size()>0){
 	    	  for(Song item: relatedSongs){
+	    		String urlPicture = request.getContextPath() + "/uploads/images/";
+	    	  	urlPicture += !"".equals(item.getPicture())? item.getPicture() : "no-image.jpg";
       %>
       <div class="comment">
       <a href="<%=request.getContextPath()%>/detail?id=<%=item.getId() %>">
-      <%if(!"".equals(item.getPicture())){ %>
-      <img src="<%=request.getContextPath() %>/uploads/images/<%=item.getPicture() %>" width="40" height="40" alt="" class="userpic" />
-      <%}else{ %>
-      <img src="<%=request.getContextPath() %>/uploads/images/no-image.jpg" width="40" height="40" alt="" class="userpic" />
-      <%} %>
+      <img src="<%=urlPicture %>" width="40" height="40" alt="<%=urlPicture %>" class="fl" />
       </a>
         <h2><a href="<%=request.getContextPath()%>/detail?id=<%=item.getId() %>"><%=item.getName() %></a></h2>
         <p><%=item.getDescription() %></p>

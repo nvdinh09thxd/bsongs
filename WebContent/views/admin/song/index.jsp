@@ -48,6 +48,10 @@
 								<div class="alert alert-success" role="alert">
 								  Xóa bài hát thành công!
 							</div>
+							<%} else if ("4".equals(msg)) {%>
+								<div class="alert alert-danger" role="alert">
+								  Bài hát không tồn tại!
+							</div>
 							<%} else if ("0".equals(msg)) {%>
 								<div class="alert alert-danger" role="alert">
 								  Xóa bài hát thất bại!
@@ -73,6 +77,8 @@
                                 		for(Song song: listSong){
                                 			String urlEdit = request.getContextPath()+"/admin/song/edit?sid="+song.getId();
                                 			String urlDel = request.getContextPath()+"/admin/song/del?sid="+song.getId();
+                                			String urlPicture = request.getContextPath() + "/uploads/images/";
+                                			urlPicture += !"".equals(song.getPicture())? song.getPicture() : "no-image.jpg";
                                 %>                                
                                     <tr>
                                         <td><%=song.getId() %></td>
@@ -80,15 +86,8 @@
                                         <td class="center"><%=song.getCat().getName() %></td>
                                         <td class="center"><%=song.getCount() %></td>
                                         <td class="center">
-                                        <%
-                                        	if(!"".equals(song.getPicture())){
-                                        %>
-											<img width="200px" height="200px" 
-											src="<%=request.getContextPath() %>/uploads/images/<%=song.getPicture() %>" alt="<%=song.getPicture() %>"/>
-                                        <%} else { %>
-											<img width="200px" height="200px" 
-											src="<%=request.getContextPath() %>/uploads/images/no-image.jpg" alt="Không có hình ảnh"/>
-                                        <%} %>
+                                        <img width="200px" height="200px" 
+											src="<%=urlPicture%>" alt="<%=urlPicture%>" />
                                         </td>
                                         <td class="center">
                                             <a href="<%=urlEdit %>" title="Sửa" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>

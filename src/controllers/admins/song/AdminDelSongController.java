@@ -22,9 +22,15 @@ public class AdminDelSongController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("sid"));
+		int id = 0;
+		try {
+			id = Integer.parseInt(request.getParameter("sid"));
+		} catch (NumberFormatException e) {
+			response.sendRedirect(request.getContextPath() + "/admin/song/index?msg=4");
+			return;
+		}
 
-		// kiểm tra tin, nếu có file thì xóa
+		// kiểm tra tin, nếu có ảnh thì xóa
 		Song song = songDao.findOne(id);
 		String picture = song.getPicture();
 

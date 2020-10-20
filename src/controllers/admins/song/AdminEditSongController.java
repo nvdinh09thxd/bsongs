@@ -30,7 +30,7 @@ public class AdminEditSongController extends HttpServlet {
 		try {
 			songId = Integer.parseInt(request.getParameter("sid"));
 		} catch (NumberFormatException e) {
-			response.sendRedirect(request.getContextPath() + "/admin/song/index?msg=0");
+			response.sendRedirect(request.getContextPath() + "/admin/song/index?msg=4");
 			return;
 		}
 		Song itemSong = songDao.findOne(songId);
@@ -54,18 +54,19 @@ public class AdminEditSongController extends HttpServlet {
 		// get dữ liệu cũ
 		Song song = songDao.findOne(songId);
 		if (song == null) {
-			response.sendRedirect(request.getContextPath() + "/admin/songs?msg=0");
+			response.sendRedirect(request.getContextPath() + "/admin/song/index?msg=4");
 			return;
 		}
 		// xu ly upload file
 		String fileName = FileUtil.upload("picture", request);
+		// Nếu không chọn ảnh thì lấy lại ảnh cũ
 		if (fileName == "") {
 			fileName = song.getPicture();
 		}
 		// 1. tao doi tuong sau do luu cac thuoc tinh vao doi tuong
 		// 2. viet phuong thuc edit table
 		Song itemSong = new Song(songId, songName, description, detail, null, fileName, 0, new Category(catId, null));
-		// insert database
+		// update in database
 		if (songDao.edit(itemSong) > 0) {
 			// Nếu có chọn file và đã thực hiện thành công thì xóa file cũ đi
 			if (request.getPart("picture").getSubmittedFileName() != "") {

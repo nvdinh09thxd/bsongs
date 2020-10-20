@@ -1,5 +1,4 @@
-﻿<%@page import="models.Category"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ include file="/templates/admin/inc/header.jsp" %>
 <%@ include file="/templates/admin/inc/leftbar.jsp" %>
@@ -53,8 +52,5 @@
     </div>
     <!-- /. PAGE INNER  -->
 </div>
-<script>
-    document.getElementById("category").classList.add('active-menu');
-</script>
 <!-- /. PAGE WRAPPER  -->
 <%@ include file="/templates/admin/inc/footer.jsp" %>

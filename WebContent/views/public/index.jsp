@@ -4,23 +4,21 @@
 <div class="content_resize">
   <div class="mainbar">
   <%
+  List<Song> listSong = null;
   if(request.getAttribute("listSong")!=null){
-	  @SuppressWarnings("unchecked")
-	  List<Song> listSong = (List<Song>) request.getAttribute("listSong");
+	  listSong = (List<Song>) request.getAttribute("listSong");
 	  int i=0;
 	  for(Song item: listSong){
 		  i++;
+		  String urlPicture = request.getContextPath() + "/uploads/images/";
+		  urlPicture += !"".equals(item.getPicture())? item.getPicture() : "no-image.jpg";
   %>
     <div class="article">
       <h2><a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>" title="<%=item.getName() %>"><%=item.getName() %></a></h2>
       <p class="infopost">Ngày đăng: <%=item.getCreateAt() %>. Lượt xem: <%=item.getCount() %> <a href="#" class="com"><span><%=i %></span></a></p>
       <div class="clr"></div>
       <div class="img">
-     	<%if(!"".equals(item.getPicture())){ %>
-      	<img src="<%=request.getContextPath() %>/uploads/images/<%=item.getPicture() %>" width="177" height="213" alt="<%=item.getPicture() %>" class="fl" />
-      	<%}else{ %>
-      	<img src="<%=request.getContextPath() %>/uploads/images/no-image.jpg" width="177" height="213" alt="<%=item.getPicture() %>" class="fl" />
-      	<%} %>
+      	<img src="<%=urlPicture %>" width="177" height="213" alt="<%=item.getPicture() %>" class="fl" />
       </div>
       <div class="post_content">
         <p><%=item.getDescription() %></p>
@@ -35,13 +33,23 @@
     <p>Không có bài hát nào!</p>
     </div>
     <%} %>
-    <p class="pages"><small>Trang 1 của 5</small>
-    <span>1</span>
-    <a href="">2</a>
-    <a href="">3</a>
-    <a href="">4</a>
-    <a href="">5</a>
-    <a href="#">&raquo;</a></p>
+    <%
+	    int numberOfPages = (Integer) request.getAttribute("numberOfPages");
+		int currentPage = (Integer) request.getAttribute("currentPage");
+		if(listSong != null && listSong.size() > 0 && numberOfPages > 1){
+    %>
+    <p class="pages"><small>Trang <%=currentPage %> của <%=numberOfPages %></small>
+    <a href="<%=request.getContextPath()%>/index?page=<%=currentPage-1%>" style="<%if(currentPage==1) out.print("display: none");%>">&laquo;</a>
+    <%
+	    for(int i = 1; i <= numberOfPages; i++){
+	    	if(currentPage == i){
+    %>
+    <span><%=i %></span>
+    <%} else { %>
+    <a href="<%=request.getContextPath()%>/index?page=<%=i%>"><%=i %></a>
+    <%}} %>
+    <a href="<%=request.getContextPath()%>/index?page=<%=currentPage+1%>" style="<%if(currentPage==numberOfPages) out.print("display: none");%>">&raquo;</a></p>
+  <%} %>
   </div>
   <div class="sidebar">
       <%@ include file="/templates/public/inc/leftbar.jsp" %>
