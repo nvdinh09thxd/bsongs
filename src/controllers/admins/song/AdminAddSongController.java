@@ -30,8 +30,8 @@ public class AdminAddSongController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if(!AuthUtil.checkLogin(request, response)) {
-			response.sendRedirect(request.getContextPath()+"/auth/login");
+		if (!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath() + "/auth/login");
 			return;
 		}
 		List<Category> listCat = catDao.findAll();
@@ -41,8 +41,8 @@ public class AdminAddSongController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if(!AuthUtil.checkLogin(request, response)) {
-			response.sendRedirect(request.getContextPath()+"/auth/login");
+		if (!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath() + "/auth/login");
 			return;
 		}
 		request.setCharacterEncoding("UTF-8");
@@ -61,8 +61,9 @@ public class AdminAddSongController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/admin/song/index?msg=1");
 			return;
 		}
-		//thất bại
-		request.getRequestDispatcher("/views/admin/song/add.jsp?err=0").forward(request, response);
+		// thất bại
+		FileUtil.delFile(fileName, request);
+		request.getRequestDispatcher("/views/admin/song/add.jsp").forward(request, response);
 	}
 
 }

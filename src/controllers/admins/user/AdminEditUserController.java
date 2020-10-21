@@ -97,8 +97,12 @@ public class AdminEditUserController extends HttpServlet {
 				return;
 			}
 			password = utils.StringUtil.md5(password);
-			User item = new User(id, username, password, fullname);
-			if (userDao.editItem(item) > 0) {
+			User userEdit = new User(id, username, password, fullname);
+			if (userDao.editItem(userEdit) > 0) {
+				// cập nhật thông tin userLogin
+				if (!"admin".equals(userLogin.getUsername())) {
+					session.setAttribute("userLogin", userEdit);
+				}
 				response.sendRedirect(request.getContextPath() + "/admin/user/index?msg=2");
 				return;
 			} else {
