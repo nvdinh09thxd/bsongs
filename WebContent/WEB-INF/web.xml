@@ -45,6 +45,14 @@
     <url-pattern>/404</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>PublicSearchController</servlet-name>
+    <servlet-class>controllers.publics.PublicSearchController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PublicSearchController</servlet-name>
+    <url-pattern>/search</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>AdminIndexController</servlet-name>
     <servlet-class>controllers.admins.AdminIndexController</servlet-class>
   </servlet>

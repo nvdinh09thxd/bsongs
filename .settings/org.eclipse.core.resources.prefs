@@ -11,6 +11,7 @@ encoding//src/controllers/admins/user/AdminEditUserController.java=UTF-8
 encoding//src/controllers/auth/LoginController.java=UTF-8
 encoding//src/controllers/auth/LogoutController.java=UTF-8
 encoding//src/controllers/publics/PublicDetailController.java=UTF-8
+encoding//src/controllers/publics/PublicSearchController.java=UTF-8
 encoding//src/utils/DBConnectionUtil.java=UTF-8
 encoding//src/utils/FileUtil.java=UTF-8
 encoding//src/utils/StringUtil.java=UTF-8
