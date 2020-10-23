@@ -1,3 +1,4 @@
+<%@page import="utils.StringUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 	<%@page import="java.util.List"%>
@@ -23,8 +24,10 @@
   List<Category> listCat = catDao.findAll();
   if(listCat.size()>0){
 	  for(Category item : listCat){
+		  String urlSlug = request.getContextPath()+"/danh-muc/"
+	  						+ StringUtil.makeSlug(item.getName()) + "-" + item.getId() + ".html";
   %>
-    <li><a id="<%=item.getId()%>" href="<%=request.getContextPath()%>/cat?id=<%=item.getId()%>"><%=item.getName() %></a></li>
+    <li><a id="<%=item.getId()%>" href="<%=urlSlug%>"><%=item.getName() %></a></li>
     <%
 	  }}
     %>
