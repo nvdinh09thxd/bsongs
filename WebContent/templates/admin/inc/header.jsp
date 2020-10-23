@@ -28,6 +28,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <a href="<%=request.getContextPath() %>/index">Public</a>
                 <a class="navbar-brand" href="<%=request.getContextPath() %>/admin/index">VinaEnter Edu</a>
             </div>
             <%

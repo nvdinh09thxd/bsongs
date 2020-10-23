@@ -28,7 +28,7 @@
   if(listCat.size()>0){
 	  for(Category item : listCat){
 		  String urlSlug = request.getContextPath()+"/danh-muc/"
-	  						+ StringUtil.makeSlug(item.getName()) + "-" + item.getId() + ".html";
+	  						+ StringUtil.makeSlug(item.getName()) + "-" + item.getId();
   %>
     <li><a id="<%=item.getId()%>" href="<%=urlSlug%>"><%=item.getName() %></a></li>
     <%

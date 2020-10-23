@@ -1,0 +1,14 @@
+<urlrewrite>
+	<rule>
+	<!-- /danh-muc/nhac-viet-2 -->
+		<from>/danh-muc/(.*)-([0-9]*)</from>
+		<to>/cat?id=$2</to>
+		<!--to>/cat?id=$2&amp;page=$3</to-->
+	</rule>
+	
+	<rule>
+	<!-- /chi-tiet/cang-kho-cang-yeu-2.html -->
+		<from>/chi-tiet/(.*)-([0-9]*).html</from>
+		<to>/detail?id=$2</to>
+	</rule>
+</urlrewrite>

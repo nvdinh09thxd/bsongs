@@ -28,6 +28,7 @@
         <ul>
           <li id="home"><a href="<%=request.getContextPath()%>/index"><span>Trang chủ</span></a>
           <li id="contact"><a href="<%=request.getContextPath()%>/contact"><span>Liên hệ</span></a></li>
+          <li><a href="<%=request.getContextPath()%>/auth/login"><span>Đăng nhập</span></a></li>
         </ul>
       </div>
       <div class="clr"></div>
