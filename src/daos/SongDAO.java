@@ -233,4 +233,31 @@ public class SongDAO extends AbstractDAO {
 		}
 		return listItems;
 	}
+	
+	public List<Song> getItems(String name) {
+		con = DBConnectionUtil.getConnection();
+		String sql = "SELECT s.*, c.name AS cname FROM songs AS s JOIN categories AS c WHERE (s.name LIKE ? OR s.name LIKE ? OR s.name LIKE ?) AND s.cat_id = c.id ORDER BY id DESC";
+		List<Song> listItems = new ArrayList<>();
+		try {
+			pst = con.prepareStatement(sql);
+			String a = "% " + name + " %";
+			String b = name + " %";
+			String c = "% " + name;
+			pst.setString(1, a);
+			pst.setString(2, b);
+			pst.setString(3, c);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				Song ObjItem = new Song(rs.getInt("id"), rs.getString("name"), rs.getString("preview_text"),
+						rs.getString("detail_text"), rs.getTimestamp("date_create"), rs.getString("picture"),
+						rs.getInt("counter"), new Category(rs.getInt("cat_id"), rs.getString("cname")));
+				listItems.add(ObjItem);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return listItems;
+	}
 }

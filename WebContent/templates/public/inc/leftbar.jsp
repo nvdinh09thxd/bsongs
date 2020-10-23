@@ -7,9 +7,12 @@
     <%@ page import="models.Song"%>
     <%@ page import="daos.SongDAO"%>
 <div class="searchform">
-  <form id="formsearch" name="formsearch" method="post" action="#">
+	<%
+		String songName = (String) request.getAttribute("songName");
+	%>
+  <form id="formsearch" name="formsearch" method="post" action="<%=request.getContextPath()%>/search">
     <span>
-    <input name="editbox_search" class="editbox_search" id="editbox_search" maxlength="80" value="Tìm kiếm bài hát" type="text" />
+    <input name="name" class="editbox_search" id="editbox_search" maxlength="80" placeholder="Tìm kiếm bài hát" value="<%if(songName!=null) out.print(songName); %>" type="text" />
     </span>
     <input name="button_search" src="<%=request.getContextPath() %>/templates/public/images/search.jpg" class="button_search" type="image" />
   </form>
