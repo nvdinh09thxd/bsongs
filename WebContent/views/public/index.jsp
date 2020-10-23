@@ -12,9 +12,11 @@
 		  i++;
 		  String urlPicture = request.getContextPath() + "/uploads/images/";
 		  urlPicture += !"".equals(item.getPicture())? item.getPicture() : "no-image.jpg";
+		  String urlSlug = request.getContextPath()+"/chi-tiet/"
+					+ StringUtil.makeSlug(item.getName()) + "-" + item.getId() + ".html";
   %>
     <div class="article">
-      <h2><a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>" title="<%=item.getName() %>"><%=item.getName() %></a></h2>
+      <h2><a href="<%=urlSlug %>" title="<%=item.getName() %>"><%=item.getName() %></a></h2>
       <p class="infopost">Ngày đăng: <%=item.getCreateAt() %>. Lượt xem: <%=item.getCount() %> <a href="#" class="com"><span><%=i %></span></a></p>
       <div class="clr"></div>
       <div class="img">
@@ -22,7 +24,7 @@
       </div>
       <div class="post_content">
         <p><%=item.getDescription() %></p>
-        <p class="spec"><a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>" class="rm">Chi tiết &raquo;</a></p>
+        <p class="spec"><a href="<%=urlSlug %>" class="rm">Chi tiết &raquo;</a></p>
       </div>
       <div class="clr"></div>
     </div>

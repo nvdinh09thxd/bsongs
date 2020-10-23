@@ -22,7 +22,7 @@ public class AdminDelUserController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (!AuthUtil.checkLogin(request, response)) {
-			response.sendRedirect(request.getContextPath() + "/login");
+			response.sendRedirect(request.getContextPath() + "/auth/login");
 			return;
 		}
 		int id = 0;

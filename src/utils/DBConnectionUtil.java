@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBConnectionUtil {
-	private static String url = "jdbc:mysql://localhost:3306/bsongs?useUnicode=true&characterEncoding=UTF-8";
+	private static String url = "jdbc:mysql://localhost:3306/bsongs4?useUnicode=true&characterEncoding=UTF-8";
 	private static String user = "root";
 	private static String password = "";
 	private static Connection conn = null;
