@@ -23,8 +23,10 @@ public class PublicSearchController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		String name = request.getParameter("name");
 		List<Song> listSong = songDao.getItems(name);
+		
 		request.setAttribute("songName", name);
 		request.setAttribute("numberOfPages", 1);
 		request.setAttribute("currentPage", 1);
