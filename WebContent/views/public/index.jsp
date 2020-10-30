@@ -7,6 +7,7 @@
   List<Song> listSong = null;
   if(request.getAttribute("listSong")!=null){
 	  listSong = (List<Song>) request.getAttribute("listSong");
+	  if(listSong.size()>0){
 	  int i=0;
 	  for(Song item: listSong){
 		  i++;
@@ -34,7 +35,7 @@
     <div class="article">
     <p>Không có bài hát nào!</p>
     </div>
-    <%} %>
+    <%}} %>
     <%
 	    int numberOfPages = (Integer) request.getAttribute("numberOfPages");
 		int currentPage = (Integer) request.getAttribute("currentPage");
