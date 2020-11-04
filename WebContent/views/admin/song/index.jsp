@@ -1,9 +1,11 @@
-﻿<%@page import="models.Song"%>
+﻿<%@page import="models.Category"%>
+<%@page import="models.Song"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ include file="/templates/admin/inc/header.jsp" %>
 <%@ include file="/templates/admin/inc/leftbar.jsp" %>
+<script type="text/javascript" src="<%=request.getContextPath() %>/templates/admin/js/jquery-2.1.1.min.js"></script>
 <div id="page-wrapper">
     <div id="page-inner">
         <div class="row">
@@ -25,11 +27,26 @@
                                     <a href="<%=request.getContextPath() %>/admin/song/add" class="btn btn-success btn-md">Thêm</a>
                                 </div>
                                 <div class="col-sm-6" style="text-align: right;">
-                                    <form method="post" action="">
-                                        <input type="submit" name="search" value="Tìm kiếm" class="btn btn-warning btn-sm" style="float:right" />
-                                        <input type="search" class="form-control input-sm" placeholder="Nhập tên bài hát" style="float:right; width: 300px;" />
-                                        <div style="clear:both"></div>
-                                    </form><br />
+                                <%
+                                	List<Category> listCat = (List<Category>) request.getAttribute("listCat");
+                                %>
+                                <form method="post" action="">
+                                <%
+                                	if(listCat != null && listCat.size() > 0){
+                                %>
+		                              <select id="catId" onchange="onSelectCat()">
+			                               <option value="0">--Chọn danh mục--</option>
+			                               <%
+			                               for(Category cat: listCat){
+			                               %>
+			                               <option value="<%=cat.getId()%>"><%=cat.getName()%></option>
+			                               <%} %>
+		                              </select>
+	                              <%} %>
+	                                  <input type="submit" name="search" value="Tìm kiếm" class="btn btn-warning btn-sm" style="float:right" />
+	                                  <input type="search" class="form-control input-sm" placeholder="Nhập tên bài hát" style="float:right; width: 300px;" />
+                                    <div style="clear:both"></div>
+                                </form><br />
                                 </div>
                             </div>
 							<%
@@ -126,6 +143,24 @@
 </div>
 <script>
     document.getElementById("song").classList.add('active-menu');
+    function onSelectCat() {
+    	  let catId = $("#catId").val();
+    	  $.ajax({
+				url: '<%=request.getContextPath()%>/admin/song/index',
+				type: 'POST',
+				cache: false,
+				data: {
+					acatId: catId,
+				},
+				success: function(data){
+					$("tbody").html(data);
+				},
+				error: function (){
+					alert('Có lỗi xảy ra');
+				}
+			});
+			return false;
+    }
 </script>
 <!-- /. PAGE INNER  -->
 <%@ include file="/templates/admin/inc/footer.jsp" %>
