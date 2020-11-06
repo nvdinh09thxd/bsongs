@@ -68,8 +68,6 @@
                                     </div>
                                     <button type="submit" name="submit" class="btn btn-success btn-md">Sửa</button>
                                 </form>
-                                <%
-                                %>
                             </div>
                         </div>
                     </div>

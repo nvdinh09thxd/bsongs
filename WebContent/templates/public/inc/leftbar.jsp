@@ -46,8 +46,10 @@
   List<Song> listRecentSong = songDao.getItems(6);
   if(listRecentSong.size()>0){
 	  for(Song item : listRecentSong){
+		  String urlSlug = request.getContextPath()+"/chi-tiet/"
+					+ StringUtil.makeSlug(item.getName()) + "-" + item.getId() + ".html";
   %>
-    <li><a href="#"><%=item.getName() %></a><br />
+    <li><a href="<%=urlSlug %>"><%=item.getName() %></a><br />
       <%if(item.getDescription().length()>50) out.print(item.getDescription().substring(0, 50)+"..."); else out.print(item.getDescription()); %></li>
     <%
 	  }}

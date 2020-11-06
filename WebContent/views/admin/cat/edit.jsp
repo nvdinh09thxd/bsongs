@@ -33,14 +33,16 @@
                             <div class="col-md-12">
                                 <form role="form" method="post" id="form">
                                 <%
+                                	String catName = "";
                                 	if(request.getAttribute("cat")!=null){
                                 		Category cat = (Category) request.getAttribute("cat");
+                                		catName = cat.getName();
+                                	}
                                 %>
                                     <div class="form-group">
                                         <label for="name">Tên danh mục</label>
-                                        <input type="text" id="name" value="<%=cat.getName() %>" name="name" class="form-control" />
+                                        <input type="text" id="name" value="<%if(!"".equals(catName)) out.print(catName); %>" name="name" class="form-control" />
                                     </div>
-                                    <%} %>
                                     <button type="submit" name="submit" class="btn btn-success btn-md">Sửa</button>
                                 </form>
                             </div>

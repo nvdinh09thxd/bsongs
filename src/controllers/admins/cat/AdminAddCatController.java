@@ -39,9 +39,8 @@ public class AdminAddCatController extends HttpServlet {
 		CatDAO catDao = new CatDAO();
 		String name = request.getParameter("name");
 		Category cat = new Category(0, name);
-		request.setAttribute("cat", cat);
 		if ("".equals(name)) {
-			request.getRequestDispatcher("/views/admin/cat/add.jsp?err=1").forward(request, response);
+			response.sendRedirect(request.getContextPath() +"/admin/cat/add?err=1");
 			return;
 		}
 		int add = catDao.add(cat);
@@ -51,6 +50,7 @@ public class AdminAddCatController extends HttpServlet {
 			return;
 		}
 		// thất bại
+		request.setAttribute("cat", cat);
 		request.getRequestDispatcher("/views/admin/cat/add.jsp?err=0").forward(request, response);
 	}
 

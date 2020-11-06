@@ -44,7 +44,12 @@ public class AdminIndexSongController extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		int catId = Integer.parseInt(request.getParameter("acatId"));
-		List<Song> listSong = songDao.getItemsByCategory(catId);
+		List<Song> listSong;
+		if (catId == 0) {
+			listSong = songDao.findAll();
+		} else {
+			listSong = songDao.getItemsByCategory(catId);
+		}
 
 		if (listSong.size() > 0) {
 			for (Song song : listSong) {
