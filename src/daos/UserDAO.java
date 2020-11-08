@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Granted;
 import models.User;
 import utils.DBConnectionUtil;
 
@@ -12,13 +13,14 @@ public class UserDAO extends AbstractDAO {
 	public List<User> findAll() {
 		List<User> lists = new ArrayList<>();
 		con = DBConnectionUtil.getConnection();
-		String sql = "SELECT id, username, password, fullname FROM users ORDER BY id DESC";
+		String sql = "SELECT u.id, username, password, fullname, g.add, g.edit, g.del, g.granted FROM users u"
+				+ " JOIN granted g ON u.role = g.id  ORDER BY id DESC";
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
-				User user = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"),
-						rs.getString("fullname"));
+				User user = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("fullname"),
+						new Granted(0, rs.getInt("add"), rs.getInt("edit"), rs.getInt("del"), rs.getInt("granted")));
 				;
 				lists.add(user);
 			}
@@ -32,15 +34,16 @@ public class UserDAO extends AbstractDAO {
 
 	public User getItem(int id) {
 		con = DBConnectionUtil.getConnection();
-		String sql = "SELECT * FROM users WHERE id = ?";
+		String sql = "SELECT u.id, username, password, fullname, g.add, g.edit, g.del, g.granted FROM users u"
+					+ " JOIN granted g ON u.role = g.id WHERE u.id = ?";
 		User item = null;
 		try {
 			pst = con.prepareStatement(sql);
 			pst.setInt(1, id);
 			rs = pst.executeQuery();
 			if (rs.next()) {
-				item = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"),
-						rs.getString("fullname"));
+				item = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("fullname"),
+						new Granted(0, rs.getInt("add"), rs.getInt("edit"), rs.getInt("del"), rs.getInt("granted")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -49,10 +52,11 @@ public class UserDAO extends AbstractDAO {
 		}
 		return item;
 	}
-	
+
 	public User findUsernameAndPassword(String username, String password) {
 		con = DBConnectionUtil.getConnection();
-		String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+		String sql = "SELECT u.id, username, password, fullname, g.add, g.edit, g.del, g.granted FROM users u"
+				+ " JOIN granted g ON u.role = g.id WHERE username = ? AND password = ?";
 		User item = null;
 		try {
 			pst = con.prepareStatement(sql);
@@ -60,8 +64,8 @@ public class UserDAO extends AbstractDAO {
 			pst.setString(2, password);
 			rs = pst.executeQuery();
 			if (rs.next()) {
-				item = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"),
-						rs.getString("fullname"));
+				item = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("fullname"),
+						new Granted(0, rs.getInt("add"), rs.getInt("edit"), rs.getInt("del"), rs.getInt("granted")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -74,12 +78,13 @@ public class UserDAO extends AbstractDAO {
 	public int addItem(User item) {
 		int result = 0;
 		con = DBConnectionUtil.getConnection();
-		String sql = "INSERT INTO users (username, password, fullname) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO users (username, password, fullname, role) VALUES (?, ?, ?, ?)";
 		try {
 			pst = con.prepareStatement(sql);
 			pst.setString(1, item.getUsername());
 			pst.setString(2, item.getPassword());
 			pst.setString(3, item.getFullname());
+			pst.setInt(4, item.getGranted().getId());
 			result = pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import daos.UserDAO;
+import models.Granted;
 import models.User;
 import utils.AuthUtil;
 
@@ -37,7 +38,7 @@ public class AdminEditUserController extends HttpServlet {
 		}
 		HttpSession session = request.getSession();
 		User userLogin = (User) session.getAttribute("userLogin");
-		if ("admin".equals(userLogin.getUsername()) || (id == userLogin.getId())) {
+		if ((userLogin.getGranted().getGranted() == 1) || (id == userLogin.getId())) {
 			// chỉ có admin hoặc chính người dùng đó đăng nhập mới được phép sửa
 			User itemUser = userDao.getItem(id);
 			if (itemUser != null) {
@@ -68,7 +69,7 @@ public class AdminEditUserController extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		User userLogin = (User) session.getAttribute("userLogin");
-		if ("admin".equals(userLogin.getUsername()) || (id == userLogin.getId())) {
+		if ((userLogin.getGranted().getGranted() == 1) || (id == userLogin.getId())) {
 			// chỉ có admin hoặc chính người dùng đó đăng nhập mới được phép sửa
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
@@ -97,7 +98,8 @@ public class AdminEditUserController extends HttpServlet {
 				return;
 			}
 			password = utils.StringUtil.md5(password);
-			User userEdit = new User(id, username, password, fullname);
+			User userEdit = new User(id, username, password, fullname,
+					new Granted(user.getGranted().getId(), user.getGranted().getAdd(), user.getGranted().getEdit(), user.getGranted().getDel(), user.getGranted().getGranted()));
 			if (userDao.editItem(userEdit) > 0) {
 				// cập nhật thông tin userLogin
 				if (!"admin".equals(userLogin.getUsername())) {

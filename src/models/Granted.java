@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
-	private int id;
-	private String username;
-	private String password;
-	private String fullname;
-	private Granted granted;
+public class Granted {
+	int id ;
+	int add;
+	int edit;
+	int del;
+	int granted;
 }

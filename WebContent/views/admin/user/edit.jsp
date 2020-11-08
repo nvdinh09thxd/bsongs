@@ -56,7 +56,7 @@
                                 <form role="form" method="post" id="form">
                                     <div class="form-group">
                                         <label for="name">Username</label>
-                                        <input type="text" id="username" value="<%if(!"".equals(username)) out.print(username); %>" name="username" class="form-control" />
+                                        <input type="text" id="username" value="<%if(!"".equals(username)) out.print(username); %>" name="username" class="form-control" readonly />
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Password</label>

@@ -20,7 +20,8 @@
                     <div class="panel-body">
                         <div class="table-responsive">
                             <div class="row">
-                                <div class="col-sm-6">
+                            <%User userLogin = (User) session.getAttribute("userLogin"); %>
+                                <div class="col-sm-6" style="<%if(userLogin.getGranted().getGranted()>1) out.print("display: none");%>">
                                     <a href="<%=request.getContextPath() %>/admin/user/add" class="btn btn-success btn-md">Thêm</a>
                                 </div>
                                 <br /><br />
@@ -53,14 +54,14 @@
 							<div class="alert alert-danger" role="alert">
   								Xử lý thất bại!
 							</div>
-							<%}} %>
+							<%}}%>
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
                                         <th>Tên đăng nhập</th>
                                         <th>Họ tên</th>
-                                        <th width="160px">Chức năng</th>
+                                        <th width="160px" style="<%if(userLogin.getGranted().getGranted()>2) out.print("display: none");%>">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,15 +78,22 @@
                                         <td class="center"><%=objItem.getUsername() %></td>
                                         <td class="center"><%=objItem.getFullname() %></td>
                                         <%
-	                                        User userLogin = (User) session.getAttribute("userLogin");
+                                        	if(userLogin.getGranted().getGranted()==1){
                                         %>
                                         <td class="center">
-                                            <a href="<%=urlEdit%>" title="Sửa" class="btn btn-primary"
-                                            style="<%if(!"admin".equals(userLogin.getUsername()) && userLogin.getId()!=objItem.getId()) out.print("display: none"); %>">
-                                            <i class="fa fa-edit "></i> Sửa</a>
-                                            <a href="<%=urlDel%>" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')" title="Xóa" class="btn btn-danger"
-                                            style="<%if(!"admin".equals(userLogin.getUsername())) out.print("display: none"); %>"><i class="fa fa-pencil"></i> Xóa</a>
+                                            <a href="<%=request.getContextPath() %>/admin/user/edit?id=<%=objItem.getId() %>" title="Sửa" class="btn btn-primary"
+                                            ><i class="fa fa-edit "></i> Sửa</a>
+                                            
+                                            <a href="<%=request.getContextPath() %>/admin/user/del?id=<%=objItem.getId() %>" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')" title="Xóa" class="btn btn-danger"
+                                            ><i class="fa fa-pencil"></i> Xóa</a>
                                         </td>
+                                        <%} else if(userLogin.getGranted().getGranted()==2) { %>
+                                        <td class="center">
+                                        <%if(userLogin.getId()==objItem.getId()){ %>
+                                            <a href="<%=request.getContextPath() %>/admin/user/edit?id=<%=objItem.getId() %>" title="Sửa" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
+                                        <%} %>
+                                        </td>
+                                        <%} %>
                                     </tr>
 									<%}} else {
 										out.print("Khong co du lieu!");
