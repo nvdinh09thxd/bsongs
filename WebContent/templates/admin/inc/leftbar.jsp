@@ -1,7 +1,9 @@
+<%@page import="models.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%
 if(session.getAttribute("userLogin")!=null){
+	User userLogin = (User) session.getAttribute("userLogin");
 %>
 <nav class="navbar-default navbar-side" role="navigation">
     <div class="sidebar-collapse">
@@ -20,6 +22,9 @@ if(session.getAttribute("userLogin")!=null){
             </li>
             <li>
                 <a id="user" href="<%=request.getContextPath()%>/admin/user/index"><i class="fa fa-user fa-3x"></i> Quản lý người dùng</a>
+            </li>
+            <li style="<%if(userLogin.getRole()!=1) out.print("display: none");%>">
+                <a id="granted" href="<%=request.getContextPath()%>/admin/granted/index"><i class="fa fa-user fa-3x"></i> Quản lý phân quyền</a>
             </li>
         </ul>
     </div>

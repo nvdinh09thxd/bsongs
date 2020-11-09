@@ -8,11 +8,13 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import daos.CatDAO;
 import daos.SongDAO;
 import models.Category;
 import models.Song;
+import models.User;
 import utils.AuthUtil;
 import utils.FileUtil;
 
@@ -34,6 +36,15 @@ public class AdminAddSongController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/auth/login");
 			return;
 		}
+
+		HttpSession session = request.getSession();
+		User userLogin = (User) session.getAttribute("userLogin");
+		// chỉ user được cấp quyền mới được phép thêm
+		if (userLogin.getGranted().getAdd() != 1) {
+			// không được phép
+			response.sendRedirect(request.getContextPath() + "/admin/song/index?msg=5");
+			return;
+		}
 		List<Category> listCat = catDao.findAll();
 		request.setAttribute("listCat", listCat);
 		request.getRequestDispatcher("/views/admin/song/add.jsp").forward(request, response);
@@ -43,6 +54,15 @@ public class AdminAddSongController extends HttpServlet {
 			throws ServletException, IOException {
 		if (!AuthUtil.checkLogin(request, response)) {
 			response.sendRedirect(request.getContextPath() + "/auth/login");
+			return;
+		}
+
+		HttpSession session = request.getSession();
+		User userLogin = (User) session.getAttribute("userLogin");
+		// chỉ user được cấp quyền mới được phép thêm
+		if (userLogin.getGranted().getAdd() != 1) {
+			// không được phép
+			response.sendRedirect(request.getContextPath() + "/admin/song/index?msg=5");
 			return;
 		}
 		request.setCharacterEncoding("UTF-8");

@@ -20,8 +20,10 @@
                     <div class="panel-body">
                         <div class="table-responsive">
                             <div class="row">
+                            	<%User userLogin = (User) session.getAttribute("userLogin"); %>
                                 <div class="col-sm-6">
-                                    <a href="<%=request.getContextPath() %>/admin/cat/add" class="btn btn-success btn-md">Thêm</a>
+                                    <a href="<%=request.getContextPath() %>/admin/cat/add" class="btn btn-success btn-md"
+                                    style="<%if(userLogin.getGranted().getAdd()!=1) out.print("display: none");%>">Thêm</a>
                                 </div>
                                 <div class="col-sm-6" style="text-align: right;">
                                     <form method="post" action="">
@@ -47,6 +49,10 @@
 							<div class="alert alert-success" role="alert">
 								  Xóa danh mục thành công!
 							</div>
+							<%} else if("5".equals(msg)) { %>
+							<div class="alert alert-danger" role="alert">
+								  Không được phép!
+							</div>
 							<%}else if("0".equals(msg)) { %>
 							<div class="alert alert-danger" role="alert">
   								Xử lý thất bại!
@@ -57,7 +63,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Tên danh mục</th>
-                                        <th width="160px">Chức năng</th>
+                                        <th width="160px" style="<%if(userLogin.getGranted().getEdit()!=1 && userLogin.getGranted().getDel()!=1) out.print("display: none");%>">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,9 +80,11 @@
                                     <tr>
                                         <td><%=id %></td>
                                         <td class="center"><%=name %></td>
-                                        <td class="center">
-                                            <a href="<%=urlEdit %>" title="" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
-                                            <a href="<%=urlDel %>" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')" title="" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+                                        <td class="center" style="<%if(userLogin.getGranted().getEdit()!=1 && userLogin.getGranted().getDel()!=1) out.print("display: none");%>">
+                                            <a href="<%=urlEdit %>" title="" class="btn btn-primary"
+                                            style="<%if(userLogin.getGranted().getEdit()!=1) out.print("display: none");%>"><i class="fa fa-edit "></i> Sửa</a>
+                                            <a href="<%=urlDel %>" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')" title="" class="btn btn-danger"
+                                            style="<%if(userLogin.getGranted().getDel()!=1) out.print("display: none");%>"><i class="fa fa-pencil"></i> Xóa</a>
                                         </td>
                                     </tr>
 									<%}}} %>

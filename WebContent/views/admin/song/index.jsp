@@ -23,8 +23,10 @@
                     <div class="panel-body">
                         <div class="table-responsive">
                             <div class="row">
+                            <%User userLogin = (User) session.getAttribute("userLogin"); %>
                                 <div class="col-sm-6">
-                                    <a href="<%=request.getContextPath() %>/admin/song/add" class="btn btn-success btn-md">Thêm</a>
+                                    <a href="<%=request.getContextPath() %>/admin/song/add" class="btn btn-success btn-md"
+                                    style="<%if(userLogin.getGranted().getAdd()!=1) out.print("display: none");%>">Thêm</a>
                                 </div>
                                 <div class="col-sm-6" style="text-align: right;">
                                 <%
@@ -69,6 +71,10 @@
 								<div class="alert alert-danger" role="alert">
 								  Bài hát không tồn tại!
 							</div>
+							<%} else if ("5".equals(msg)) {%>
+								<div class="alert alert-danger" role="alert">
+								  Không có quyền!
+							</div>
 							<%} else if ("0".equals(msg)) {%>
 								<div class="alert alert-danger" role="alert">
 								  Xóa bài hát thất bại!
@@ -83,7 +89,7 @@
                                         <th>Danh mục</th>
                                         <th>Lượt đọc</th>
                                         <th>Hình ảnh</th>
-                                        <th width="160px">Chức năng</th>
+                                        <th width="160px" style="<%if(userLogin.getGranted().getEdit()!=1 && userLogin.getGranted().getDel()!=1) out.print("display: none");%>">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>                                
@@ -106,9 +112,11 @@
                                         <img width="200px" height="200px" 
 											src="<%=urlPicture%>" alt="<%=urlPicture%>" />
                                         </td>
-                                        <td class="center">
-                                            <a href="<%=urlEdit %>" title="Sửa" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
-                                            <a href="<%=urlDel %>" title="Xóa" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')"><i class="fa fa-pencil"></i> Xóa</a>
+                                        <td class="center" style="<%if(userLogin.getGranted().getEdit()!=1 && userLogin.getGranted().getDel()!=1) out.print("display: none");%>">
+                                            <a href="<%=urlEdit %>" title="Sửa" class="btn btn-primary"
+                                            style="<%if(userLogin.getGranted().getEdit()!=1) out.print("display: none");%>"><i class="fa fa-edit "></i> Sửa</a>
+                                            <a href="<%=urlDel %>" title="Xóa" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')"
+                                            style="<%if(userLogin.getGranted().getDel()!=1) out.print("display: none");%>"><i class="fa fa-pencil"></i> Xóa</a>
                                         </td>
                                     </tr>
 									<%}}} %>

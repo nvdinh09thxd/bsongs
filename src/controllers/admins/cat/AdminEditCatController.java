@@ -6,9 +6,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import daos.CatDAO;
 import models.Category;
+import models.User;
 import utils.AuthUtil;
 
 public class AdminEditCatController extends HttpServlet {
@@ -20,10 +22,19 @@ public class AdminEditCatController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if(!AuthUtil.checkLogin(request, response)) {
-			response.sendRedirect(request.getContextPath()+"/auth/login");
+		if (!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath() + "/auth/login");
 			return;
 		}
+		HttpSession session = request.getSession();
+		User userLogin = (User) session.getAttribute("userLogin");
+		// chỉ user được cấp quyền mới được phép sửa
+		if (userLogin.getGranted().getEdit() != 1) {
+			// không được phép
+			response.sendRedirect(request.getContextPath() + "/admin/cat/index?msg=5");
+			return;
+		}
+
 		CatDAO catDao = new CatDAO();
 		int id = Integer.parseInt(request.getParameter("cid"));
 		Category cat = catDao.findItem(id);
@@ -33,8 +44,16 @@ public class AdminEditCatController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if(!AuthUtil.checkLogin(request, response)) {
-			response.sendRedirect(request.getContextPath()+"/auth/login");
+		if (!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath() + "/auth/login");
+			return;
+		}
+		HttpSession session = request.getSession();
+		User userLogin = (User) session.getAttribute("userLogin");
+		// chỉ user được cấp quyền mới được phép sửa
+		if (userLogin.getGranted().getEdit() != 1) {
+			// không được phép
+			response.sendRedirect(request.getContextPath() + "/admin/cat/index?msg=5");
 			return;
 		}
 		request.setCharacterEncoding("UTF-8");
@@ -44,7 +63,7 @@ public class AdminEditCatController extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("cid"));
 		String name = request.getParameter("name");
 		Category cat = new Category(id, name);
-		if("".equals(name)) {
+		if ("".equals(name)) {
 			request.getRequestDispatcher("/views/admin/cat/edit.jsp?err=1").forward(request, response);
 			return;
 		}

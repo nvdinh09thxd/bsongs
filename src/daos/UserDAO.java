@@ -13,14 +13,15 @@ public class UserDAO extends AbstractDAO {
 	public List<User> findAll() {
 		List<User> lists = new ArrayList<>();
 		con = DBConnectionUtil.getConnection();
-		String sql = "SELECT u.id, username, password, fullname, g.add, g.edit, g.del, g.granted FROM users u"
+		String sql = "SELECT u.id, username, password, fullname, role, g.name, g.addon, g.edit, g.del FROM users u"
 				+ " JOIN granted g ON u.role = g.id  ORDER BY id DESC";
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
-				User user = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("fullname"),
-						new Granted(0, rs.getInt("add"), rs.getInt("edit"), rs.getInt("del"), rs.getInt("granted")));
+				User user = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"),
+						rs.getString("fullname"), rs.getInt("role"),
+						new Granted(rs.getInt("id"), rs.getString("name"), rs.getInt("addon"), rs.getInt("edit"), rs.getInt("del")));
 				;
 				lists.add(user);
 			}
@@ -34,16 +35,17 @@ public class UserDAO extends AbstractDAO {
 
 	public User getItem(int id) {
 		con = DBConnectionUtil.getConnection();
-		String sql = "SELECT u.id, username, password, fullname, g.add, g.edit, g.del, g.granted FROM users u"
-					+ " JOIN granted g ON u.role = g.id WHERE u.id = ?";
+		String sql = "SELECT u.id, username, password, fullname, role, g.name, g.addon, g.edit, g.del FROM users u"
+				+ " JOIN granted g ON u.role = g.id WHERE u.id = ?";
 		User item = null;
 		try {
 			pst = con.prepareStatement(sql);
 			pst.setInt(1, id);
 			rs = pst.executeQuery();
 			if (rs.next()) {
-				item = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("fullname"),
-						new Granted(0, rs.getInt("add"), rs.getInt("edit"), rs.getInt("del"), rs.getInt("granted")));
+				item = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"),
+						rs.getString("fullname"), rs.getInt("role"),
+						new Granted(rs.getInt("id"), rs.getString("name"), rs.getInt("addon"), rs.getInt("edit"), rs.getInt("del")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -55,7 +57,7 @@ public class UserDAO extends AbstractDAO {
 
 	public User findUsernameAndPassword(String username, String password) {
 		con = DBConnectionUtil.getConnection();
-		String sql = "SELECT u.id, username, password, fullname, g.add, g.edit, g.del, g.granted FROM users u"
+		String sql = "SELECT u.id, username, password, fullname, role, g.name, g.addon, g.edit, g.del FROM users u"
 				+ " JOIN granted g ON u.role = g.id WHERE username = ? AND password = ?";
 		User item = null;
 		try {
@@ -64,8 +66,9 @@ public class UserDAO extends AbstractDAO {
 			pst.setString(2, password);
 			rs = pst.executeQuery();
 			if (rs.next()) {
-				item = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("fullname"),
-						new Granted(0, rs.getInt("add"), rs.getInt("edit"), rs.getInt("del"), rs.getInt("granted")));
+				item = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"),
+						rs.getString("fullname"), rs.getInt("role"),
+						new Granted(rs.getInt("id"), rs.getString("name"), rs.getInt("addon"), rs.getInt("edit"), rs.getInt("del")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -84,7 +87,7 @@ public class UserDAO extends AbstractDAO {
 			pst.setString(1, item.getUsername());
 			pst.setString(2, item.getPassword());
 			pst.setString(3, item.getFullname());
-			pst.setInt(4, item.getGranted().getId());
+			pst.setInt(4, item.getRole());
 			result = pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -6,9 +6,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import daos.SongDAO;
 import models.Song;
+import models.User;
 import utils.AuthUtil;
 import utils.FileUtil;
 
@@ -25,6 +27,15 @@ public class AdminDelSongController extends HttpServlet {
 			throws ServletException, IOException {
 		if(!AuthUtil.checkLogin(request, response)) {
 			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
+
+		HttpSession session = request.getSession();
+		User userLogin = (User) session.getAttribute("userLogin");
+		// chỉ user được cấp quyền mới được phép xóa
+		if (userLogin.getGranted().getDel() != 1) {
+			// không được phép
+			response.sendRedirect(request.getContextPath() + "/admin/song/index?msg=5");
 			return;
 		}
 		int id = 0;

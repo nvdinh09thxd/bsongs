@@ -21,7 +21,7 @@
                         <div class="table-responsive">
                             <div class="row">
                             <%User userLogin = (User) session.getAttribute("userLogin"); %>
-                                <div class="col-sm-6" style="<%if(userLogin.getGranted().getGranted()>1) out.print("display: none");%>">
+                                <div class="col-sm-6" style="<%if(userLogin.getRole()>1) out.print("display: none");%>">
                                     <a href="<%=request.getContextPath() %>/admin/user/add" class="btn btn-success btn-md">Thêm</a>
                                 </div>
                                 <br /><br />
@@ -61,7 +61,7 @@
                                         <th>ID</th>
                                         <th>Tên đăng nhập</th>
                                         <th>Họ tên</th>
-                                        <th width="160px" style="<%if(userLogin.getGranted().getGranted()>2) out.print("display: none");%>">Chức năng</th>
+                                        <th width="160px" style="<%if(userLogin.getRole()>2) out.print("display: none");%>">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -78,7 +78,7 @@
                                         <td class="center"><%=objItem.getUsername() %></td>
                                         <td class="center"><%=objItem.getFullname() %></td>
                                         <%
-                                        	if(userLogin.getGranted().getGranted()==1){
+                                        	if(userLogin.getRole()==1){
                                         %>
                                         <td class="center">
                                             <a href="<%=request.getContextPath() %>/admin/user/edit?id=<%=objItem.getId() %>" title="Sửa" class="btn btn-primary"
@@ -87,7 +87,7 @@
                                             <a href="<%=request.getContextPath() %>/admin/user/del?id=<%=objItem.getId() %>" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')" title="Xóa" class="btn btn-danger"
                                             ><i class="fa fa-pencil"></i> Xóa</a>
                                         </td>
-                                        <%} else if(userLogin.getGranted().getGranted()==2) { %>
+                                        <%} else if(userLogin.getRole()==2) { %>
                                         <td class="center">
                                         <%if(userLogin.getId()==objItem.getId()){ %>
                                             <a href="<%=request.getContextPath() %>/admin/user/edit?id=<%=objItem.getId() %>" title="Sửa" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>

@@ -37,12 +37,12 @@ public class AdminDelUserController extends HttpServlet {
 		User user = userDao.getItem(id);
 		HttpSession session = request.getSession();
 		User userLogin = (User) session.getAttribute("userLogin");
-		if ("admin".equals(user.getUsername())) {
+		if (user.getRole()==1) {
 			// không được phép xóa admin
 			response.sendRedirect(request.getContextPath() + "/admin/user/index?msg=5");
 			return;
 		} else {
-			if ("admin".equals(userLogin.getUsername())) {
+			if (userLogin.getRole() == 1) {
 				// được phép xóa
 				if (userDao.delItem(id) > 0) {
 					response.sendRedirect(request.getContextPath() + "/admin/user/index?msg=3");

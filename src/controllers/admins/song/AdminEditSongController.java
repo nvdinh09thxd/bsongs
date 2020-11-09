@@ -8,10 +8,12 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import daos.SongDAO;
 import models.Category;
 import models.Song;
+import models.User;
 import utils.AuthUtil;
 import utils.FileUtil;
 
@@ -29,6 +31,15 @@ public class AdminEditSongController extends HttpServlet {
 			throws ServletException, IOException {
 		if(!AuthUtil.checkLogin(request, response)) {
 			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
+
+		HttpSession session = request.getSession();
+		User userLogin = (User) session.getAttribute("userLogin");
+		// chỉ user được cấp quyền mới được phép sửa
+		if (userLogin.getGranted().getEdit() != 1) {
+			// không được phép
+			response.sendRedirect(request.getContextPath() + "/admin/song/index?msg=5");
 			return;
 		}
 		int songId = 0;
@@ -49,6 +60,15 @@ public class AdminEditSongController extends HttpServlet {
 			throws ServletException, IOException {
 		if(!AuthUtil.checkLogin(request, response)) {
 			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
+
+		HttpSession session = request.getSession();
+		User userLogin = (User) session.getAttribute("userLogin");
+		// chỉ user được cấp quyền mới được phép sửa
+		if (userLogin.getGranted().getEdit() != 1) {
+			// không được phép
+			response.sendRedirect(request.getContextPath() + "/admin/song/index?msg=5");
 			return;
 		}
 		request.setCharacterEncoding("utf-8");

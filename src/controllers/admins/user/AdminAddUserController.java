@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import daos.UserDAO;
-import models.Granted;
 import models.User;
 import utils.AuthUtil;
 
@@ -33,7 +32,7 @@ public class AdminAddUserController extends HttpServlet {
 		User userLogin = (User) session.getAttribute("userLogin");
 
 		// chỉ admin mới được thêm người dùng
-		if (userLogin.getGranted().getGranted() != 1) {
+		if (userLogin.getRole() != 1) {
 			// không được phép
 			response.sendRedirect(request.getContextPath() + "/admin/user/index?msg=5");
 			return;
@@ -49,7 +48,7 @@ public class AdminAddUserController extends HttpServlet {
 		User userLogin = (User) session.getAttribute("userLogin");
 
 		// chỉ admin mới được thêm người dùng
-		if (userLogin.getGranted().getGranted() != 1) {
+		if (userLogin.getRole() != 1) {
 			// không được phép
 			response.sendRedirect(request.getContextPath() + "/admin/user/index?msg=5");
 			return;
@@ -80,7 +79,7 @@ public class AdminAddUserController extends HttpServlet {
 			return;
 		}
 		password = utils.StringUtil.md5(password);
-		User item = new User(0, username, password, fullname, new Granted(3, 0, 0, 0, 0));
+		User item = new User(0, username, password, fullname, 3, null);
 		if (userDao.addItem(item) > 0) {
 			response.sendRedirect(request.getContextPath() + "/admin/user/index?msg=1");
 			return;
