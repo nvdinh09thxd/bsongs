@@ -16,7 +16,7 @@ public class GrantedDAO extends AbstractDAO {
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
-				Granted granted = new Granted(rs.getInt("id"), rs.getString("name"), rs.getInt("addon"), rs.getInt("edit"), rs.getInt("del"));
+				Granted granted = new Granted(rs.getInt("id"), rs.getString("name"), rs.getBoolean("addon"), rs.getBoolean("edit"), rs.getBoolean("del"));
 				list.add(granted);
 			}
 		} catch (SQLException e) {

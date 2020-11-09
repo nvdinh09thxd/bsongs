@@ -26,7 +26,7 @@
                             <%User userLogin = (User) session.getAttribute("userLogin"); %>
                                 <div class="col-sm-6">
                                     <a href="<%=request.getContextPath() %>/admin/song/add" class="btn btn-success btn-md"
-                                    style="<%if(userLogin.getGranted().getAdd()!=1) out.print("display: none");%>">Thêm</a>
+                                    style="<%if(!userLogin.getGranted().getAdd()) out.print("display: none");%>">Thêm</a>
                                 </div>
                                 <div class="col-sm-6" style="text-align: right;">
                                 <%
@@ -89,7 +89,7 @@
                                         <th>Danh mục</th>
                                         <th>Lượt đọc</th>
                                         <th>Hình ảnh</th>
-                                        <th width="160px" style="<%if(userLogin.getGranted().getEdit()!=1 && userLogin.getGranted().getDel()!=1) out.print("display: none");%>">Chức năng</th>
+                                        <th width="160px" style="<%if(!userLogin.getGranted().getEdit() && !userLogin.getGranted().getDel()) out.print("display: none");%>">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>                                
@@ -112,11 +112,11 @@
                                         <img width="200px" height="200px" 
 											src="<%=urlPicture%>" alt="<%=urlPicture%>" />
                                         </td>
-                                        <td class="center" style="<%if(userLogin.getGranted().getEdit()!=1 && userLogin.getGranted().getDel()!=1) out.print("display: none");%>">
+                                        <td class="center" style="<%if(!userLogin.getGranted().getEdit() && !userLogin.getGranted().getDel()) out.print("display: none");%>">
                                             <a href="<%=urlEdit %>" title="Sửa" class="btn btn-primary"
-                                            style="<%if(userLogin.getGranted().getEdit()!=1) out.print("display: none");%>"><i class="fa fa-edit "></i> Sửa</a>
+                                            style="<%if(!userLogin.getGranted().getEdit()) out.print("display: none");%>"><i class="fa fa-edit "></i> Sửa</a>
                                             <a href="<%=urlDel %>" title="Xóa" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')"
-                                            style="<%if(userLogin.getGranted().getDel()!=1) out.print("display: none");%>"><i class="fa fa-pencil"></i> Xóa</a>
+                                            style="<%if(!userLogin.getGranted().getDel()) out.print("display: none");%>"><i class="fa fa-pencil"></i> Xóa</a>
                                         </td>
                                     </tr>
 									<%}}} %>

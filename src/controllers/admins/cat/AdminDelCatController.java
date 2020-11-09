@@ -29,7 +29,7 @@ public class AdminDelCatController extends HttpServlet {
 		HttpSession session = request.getSession();
 		User userLogin = (User) session.getAttribute("userLogin");
 		// chỉ user được cấp quyền mới được phép xóa
-		if (userLogin.getGranted().getDel() != 1) {
+		if (!userLogin.getGranted().getDel()) {
 			// không được phép
 			response.sendRedirect(request.getContextPath() + "/admin/cat/index?msg=5");
 			return;

@@ -21,7 +21,7 @@ public class UserDAO extends AbstractDAO {
 			while (rs.next()) {
 				User user = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"),
 						rs.getString("fullname"), rs.getInt("role"),
-						new Granted(rs.getInt("id"), rs.getString("name"), rs.getInt("addon"), rs.getInt("edit"), rs.getInt("del")));
+						new Granted(rs.getInt("id"), rs.getString("name"), rs.getBoolean("addon"), rs.getBoolean("edit"), rs.getBoolean("del")));
 				;
 				lists.add(user);
 			}
@@ -45,7 +45,7 @@ public class UserDAO extends AbstractDAO {
 			if (rs.next()) {
 				item = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"),
 						rs.getString("fullname"), rs.getInt("role"),
-						new Granted(rs.getInt("id"), rs.getString("name"), rs.getInt("addon"), rs.getInt("edit"), rs.getInt("del")));
+						new Granted(rs.getInt("id"), rs.getString("name"), rs.getBoolean("addon"), rs.getBoolean("edit"), rs.getBoolean("del")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -68,7 +68,7 @@ public class UserDAO extends AbstractDAO {
 			if (rs.next()) {
 				item = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"),
 						rs.getString("fullname"), rs.getInt("role"),
-						new Granted(rs.getInt("id"), rs.getString("name"), rs.getInt("addon"), rs.getInt("edit"), rs.getInt("del")));
+						new Granted(rs.getInt("id"), rs.getString("name"), rs.getBoolean("addon"), rs.getBoolean("edit"), rs.getBoolean("del")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

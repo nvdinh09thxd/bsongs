@@ -37,7 +37,7 @@ public class AdminEditSongController extends HttpServlet {
 		HttpSession session = request.getSession();
 		User userLogin = (User) session.getAttribute("userLogin");
 		// chỉ user được cấp quyền mới được phép sửa
-		if (userLogin.getGranted().getEdit() != 1) {
+		if (!userLogin.getGranted().getEdit()) {
 			// không được phép
 			response.sendRedirect(request.getContextPath() + "/admin/song/index?msg=5");
 			return;
@@ -66,7 +66,7 @@ public class AdminEditSongController extends HttpServlet {
 		HttpSession session = request.getSession();
 		User userLogin = (User) session.getAttribute("userLogin");
 		// chỉ user được cấp quyền mới được phép sửa
-		if (userLogin.getGranted().getEdit() != 1) {
+		if (!userLogin.getGranted().getEdit()) {
 			// không được phép
 			response.sendRedirect(request.getContextPath() + "/admin/song/index?msg=5");
 			return;

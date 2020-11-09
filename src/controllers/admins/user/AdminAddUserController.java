@@ -73,6 +73,7 @@ public class AdminAddUserController extends HttpServlet {
 			rd.forward(request, response);
 			return;
 		}
+		// Kiểm tra trùng username
 		if (userDao.haveUser(username)) {
 			RequestDispatcher rd = request.getRequestDispatcher("/views/admin/user/add.jsp?msg=4");
 			rd.forward(request, response);

@@ -91,12 +91,6 @@ public class AdminEditUserController extends HttpServlet {
 				return;
 			}
 			User user = userDao.getItem(id);
-			// Kiểm tra trùng username
-			if (userDao.haveUser(username) && !username.equals(user.getUsername())) {
-				RequestDispatcher rd = request.getRequestDispatcher("/views/admin/user/edit.jsp?msg=4");
-				rd.forward(request, response);
-				return;
-			}
 			password = utils.StringUtil.md5(password);
 			User userEdit = new User(id, username, password, fullname, user.getRole(),
 					new Granted(user.getGranted().getId(), user.getGranted().getName(), user.getGranted().getAdd(),

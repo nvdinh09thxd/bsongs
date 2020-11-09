@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Granted {
 	int id ;
 	String name;
-	int add;
-	int edit;
-	int del;
+	Boolean add;
+	Boolean edit;
+	Boolean del;
 }

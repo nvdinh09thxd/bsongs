@@ -45,17 +45,17 @@
 										<td><%=objGranted.getName()%></td>
 										<td><a href="javascript:void(0)" title=""><img
 												id="<%=objGranted.getId() %>" alt="addon"
-												src="<%=request.getContextPath()%>/uploads/images/<%if(objGranted.getAdd()==1) out.print("tick.png"); else out.print("cancel.png");%>"
+												src="<%=request.getContextPath()%>/uploads/images/<%if(objGranted.getAdd()) out.print("tick.png"); else out.print("cancel.png");%>"
 												style="width: 45px; height: 45px; text-align: center;"></a>
 										</td>
 										<td><a href="javascript:void(0)" title=""><img
 												id="<%=objGranted.getId() %>" alt="edit"
-												src="<%=request.getContextPath()%>/uploads/images/<%if(objGranted.getEdit()==1) out.print("tick.png"); else out.print("cancel.png");%>"
+												src="<%=request.getContextPath()%>/uploads/images/<%if(objGranted.getEdit()) out.print("tick.png"); else out.print("cancel.png");%>"
 												style="width: 45px; height: 45px; text-align: center;"></a>
 										</td>
 										<td><a href="javascript:void(0)" title=""><img
 												id="<%=objGranted.getId() %>" alt="del"
-												src="<%=request.getContextPath()%>/uploads/images/<%if(objGranted.getDel()==1) out.print("tick.png"); else out.print("cancel.png");%>"
+												src="<%=request.getContextPath()%>/uploads/images/<%if(objGranted.getDel()) out.print("tick.png"); else out.print("cancel.png");%>"
 												style="width: 45px; height: 45px; text-align: center;"></a>
 										</td>
 										<%}}} %>
