@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import daos.UserDAO;
 import models.User;
+import utils.AuthUtil;
 import utils.StringUtil;
 
 public class LoginController extends HttpServlet {
@@ -23,6 +24,10 @@ public class LoginController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if(AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/admin/index");
+			return;
+		}
 		request.getRequestDispatcher("/views/auth/login.jsp").forward(request, response);
 	}
 

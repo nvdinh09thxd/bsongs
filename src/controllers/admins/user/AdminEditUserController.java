@@ -103,7 +103,7 @@ public class AdminEditUserController extends HttpServlet {
 							user.getGranted().getEdit(), user.getGranted().getDel()));
 			if (userDao.editItem(userEdit) > 0) {
 				// cập nhật thông tin userLogin
-				if (!"admin".equals(userLogin.getUsername())) {
+				if (userLogin.getRole() != 1) {
 					session.setAttribute("userLogin", userEdit);
 				}
 				response.sendRedirect(request.getContextPath() + "/admin/user/index?msg=2");
