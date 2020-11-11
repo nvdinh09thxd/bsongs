@@ -49,7 +49,7 @@
 							<%
 								String username = request.getParameter("username");
                             	String fullname = request.getParameter("fullname");
-                            	int granted = 0;
+                            	int granted = request.getAttribute("idGranted") != null? (Integer) request.getAttribute("idGranted"):0;
 								if(request.getAttribute("itemUser")!=null){
 									User itemUser = (User) request.getAttribute("itemUser");
 									username = itemUser.getUsername();
@@ -71,12 +71,13 @@
                                         <input type="text" id="fullname" value="<%if(!"".equals(fullname)) out.print(fullname); %>" name="fullname" class="form-control" />
                                     </div>
                                     <%
+                                    	User userLogin = (User) session.getAttribute("userLogin");
                                     	List<Granted> listGranted = (List<Granted>) request.getAttribute("listGranted");
                                         	if(listGranted!=null && listGranted.size()>0){
                                     %>
                                     <div class="form-group">
                                     	<label for="name">Chọn chức danh</label>
-                                    	<select name="idGranted">
+                                    	<select name="idGranted" <%if(userLogin.getRole()!=1) out.print("disabled");%>>
 			                               <%
 			                               for(Granted objGranted: listGranted){
 			                               %>

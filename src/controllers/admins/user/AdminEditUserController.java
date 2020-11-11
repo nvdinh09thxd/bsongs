@@ -80,11 +80,18 @@ public class AdminEditUserController extends HttpServlet {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			String fullname = request.getParameter("fullname");
-			int idGranted = Integer.parseInt(request.getParameter("idGranted"));
+			int idGranted = 0;
+			try {
+				idGranted = Integer.parseInt(request.getParameter("idGranted"));
+			} catch (Exception e) {}
+			User user = userDao.getItem(id);
+			if (userLogin.getRole() != 1)
+				idGranted = user.getRole();
 			GrantedDAO grantedDAO = new GrantedDAO();
 			List<Granted> listGranted = grantedDAO.findAll();
 
 			request.setAttribute("listGranted", listGranted);
+			request.setAttribute("idGranted", idGranted);
 			// VALIDATE DỮ LIỆU
 			if ("".equals(username)) {
 				RequestDispatcher rd = request.getRequestDispatcher("/views/admin/user/edit.jsp?msg=1");
@@ -96,12 +103,12 @@ public class AdminEditUserController extends HttpServlet {
 				rd.forward(request, response);
 				return;
 			}
+
 			if ("".equals(fullname)) {
 				RequestDispatcher rd = request.getRequestDispatcher("/views/admin/user/edit.jsp?msg=3");
 				rd.forward(request, response);
 				return;
 			}
-			User user = userDao.getItem(id);
 			password = utils.StringUtil.md5(password);
 			User userEdit = new User(id, username, password, fullname, idGranted,
 					new Granted(user.getGranted().getId(), user.getGranted().getName(), user.getGranted().getAdd(),
