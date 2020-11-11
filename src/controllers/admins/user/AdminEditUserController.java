@@ -1,6 +1,7 @@
 package controllers.admins.user;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import daos.GrantedDAO;
 import daos.UserDAO;
 import models.Granted;
 import models.User;
@@ -41,7 +43,11 @@ public class AdminEditUserController extends HttpServlet {
 		if ((userLogin.getRole() == 1) || (id == userLogin.getId())) {
 			// chỉ có admin hoặc chính người dùng đó đăng nhập mới được phép sửa
 			User itemUser = userDao.getItem(id);
+			GrantedDAO grantedDAO = new GrantedDAO();
+			List<Granted> listGranted = grantedDAO.findAll();
+
 			if (itemUser != null) {
+				request.setAttribute("listGranted", listGranted);
 				request.setAttribute("itemUser", itemUser);
 				RequestDispatcher rd = request.getRequestDispatcher("/views/admin/user/edit.jsp");
 				rd.forward(request, response);
@@ -74,6 +80,11 @@ public class AdminEditUserController extends HttpServlet {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			String fullname = request.getParameter("fullname");
+			int idGranted = Integer.parseInt(request.getParameter("idGranted"));
+			GrantedDAO grantedDAO = new GrantedDAO();
+			List<Granted> listGranted = grantedDAO.findAll();
+
+			request.setAttribute("listGranted", listGranted);
 			// VALIDATE DỮ LIỆU
 			if ("".equals(username)) {
 				RequestDispatcher rd = request.getRequestDispatcher("/views/admin/user/edit.jsp?msg=1");
@@ -92,12 +103,12 @@ public class AdminEditUserController extends HttpServlet {
 			}
 			User user = userDao.getItem(id);
 			password = utils.StringUtil.md5(password);
-			User userEdit = new User(id, username, password, fullname, user.getRole(),
+			User userEdit = new User(id, username, password, fullname, idGranted,
 					new Granted(user.getGranted().getId(), user.getGranted().getName(), user.getGranted().getAdd(),
 							user.getGranted().getEdit(), user.getGranted().getDel()));
 			if (userDao.editItem(userEdit) > 0) {
 				// cập nhật thông tin userLogin
-				if (userLogin.getRole() != 1) {
+				if (userLogin.getRole() != 1 || username.equals(userLogin.getUsername())) {
 					session.setAttribute("userLogin", userEdit);
 				}
 				response.sendRedirect(request.getContextPath() + "/admin/user/index?msg=2");

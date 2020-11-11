@@ -1,4 +1,6 @@
-﻿<%@page import="models.User"%>
+﻿<%@page import="models.Granted"%>
+<%@page import="java.util.List"%>
+<%@page import="models.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ include file="/templates/admin/inc/header.jsp" %>
@@ -47,10 +49,12 @@
 							<%
 								String username = request.getParameter("username");
                             	String fullname = request.getParameter("fullname");
+                            	int granted = 0;
 								if(request.getAttribute("itemUser")!=null){
 									User itemUser = (User) request.getAttribute("itemUser");
 									username = itemUser.getUsername();
 									fullname = itemUser.getFullname();
+									granted = itemUser.getRole();
 								}
 							%>
                                 <form role="form" method="post" id="form">
@@ -66,6 +70,21 @@
                                         <label for="name">Fullname</label>
                                         <input type="text" id="fullname" value="<%if(!"".equals(fullname)) out.print(fullname); %>" name="fullname" class="form-control" />
                                     </div>
+                                    <%
+                                    	List<Granted> listGranted = (List<Granted>) request.getAttribute("listGranted");
+                                        	if(listGranted!=null && listGranted.size()>0){
+                                    %>
+                                    <div class="form-group">
+                                    	<label for="name">Chọn chức danh</label>
+                                    	<select name="idGranted">
+			                               <%
+			                               for(Granted objGranted: listGranted){
+			                               %>
+			                               <option value="<%=objGranted.getId()%>" <%if(objGranted.getId()==granted) out.print("selected"); %>><%=objGranted.getName()%></option>
+			                               <%} %>
+		                              </select>
+                                    </div>
+                                    <%} %>
                                     <button type="submit" name="submit" class="btn btn-success btn-md">Sửa</button>
                                 </form>
                             </div>

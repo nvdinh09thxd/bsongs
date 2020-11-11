@@ -1,6 +1,7 @@
 package controllers.admins.user;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import daos.GrantedDAO;
 import daos.UserDAO;
+import models.Granted;
 import models.User;
 import utils.AuthUtil;
 
@@ -38,6 +41,10 @@ public class AdminAddUserController extends HttpServlet {
 			return;
 		}
 
+		GrantedDAO grantedDAO = new GrantedDAO();
+		List<Granted> listGranted = grantedDAO.findAll();
+
+		request.setAttribute("listGranted", listGranted);
 		RequestDispatcher rd = request.getRequestDispatcher("/views/admin/user/add.jsp");
 		rd.forward(request, response);
 	}
@@ -57,6 +64,11 @@ public class AdminAddUserController extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String fullname = request.getParameter("fullname");
+		int idGranted = Integer.parseInt(request.getParameter("idGranted"));
+		GrantedDAO grantedDAO = new GrantedDAO();
+		List<Granted> listGranted = grantedDAO.findAll();
+
+		request.setAttribute("listGranted", listGranted);
 		// VALIDATE DỮ LIỆU
 		if ("".equals(username)) {
 			RequestDispatcher rd = request.getRequestDispatcher("/views/admin/user/add.jsp?msg=1");
@@ -80,7 +92,7 @@ public class AdminAddUserController extends HttpServlet {
 			return;
 		}
 		password = utils.StringUtil.md5(password);
-		User item = new User(0, username, password, fullname, 3, null);
+		User item = new User(0, username, password, fullname, idGranted, null);
 		if (userDao.addItem(item) > 0) {
 			response.sendRedirect(request.getContextPath() + "/admin/user/index?msg=1");
 			return;

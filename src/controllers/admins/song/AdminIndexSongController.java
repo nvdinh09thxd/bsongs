@@ -8,11 +8,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import daos.CatDAO;
 import daos.SongDAO;
 import models.Category;
 import models.Song;
+import models.User;
 import utils.AuthUtil;
 
 public class AdminIndexSongController extends HttpServlet {
@@ -50,6 +52,8 @@ public class AdminIndexSongController extends HttpServlet {
 		} else {
 			listSong = songDao.getItemsByCategory(catId);
 		}
+		HttpSession session = request.getSession();
+		User userLogin = (User) session.getAttribute("userLogin");
 
 		if (listSong.size() > 0) {
 			for (Song song : listSong) {
@@ -64,13 +68,18 @@ public class AdminIndexSongController extends HttpServlet {
 				out.print("<td class='center'>" + song.getCount() + "</td>");
 				out.print("<td class='center'><img width='200px' height='200px' src=" + urlPicture + " alt="
 						+ urlPicture + " />");
+				String styleButton = !userLogin.getGranted().getEdit() && !userLogin.getGranted().getDel()
+						? "style='display: none'"
+						: "";
+				String styleEdit = !userLogin.getGranted().getEdit() ? "style='display: none'" : "";
+				String styleDel = !userLogin.getGranted().getDel() ? "style='display: none'" : "";
 				out.print("</td>");
-				out.print("<td class='center'>");
-				out.print("<a href=" + urlEdit
-						+ " title='Sửa' class='btn btn-primary'><i class='fa fa-edit '></i> Sửa</a>");
+				out.print("<td class='center' " + styleButton + ">");
+				out.print("<a href=" + urlEdit + " title='Sửa' class='btn btn-primary' " + styleEdit
+						+ "><i class='fa fa-edit '></i> Sửa</a>");
 				out.print("<a href=" + urlDel
-						+ " title='Xóa' class='btn btn-danger' onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\">"
-						+ "<i class='fa fa-pencil'></i>Xóa</a>");
+						+ " title='Xóa' class='btn btn-danger' onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\" "
+						+ styleDel + ">" + "<i class='fa fa-pencil'></i>Xóa</a>");
 				out.print("</td>");
 				out.print("</tr>");
 			}

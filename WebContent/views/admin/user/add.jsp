@@ -1,4 +1,6 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@page import="models.Granted"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ include file="/templates/admin/inc/header.jsp" %>
 <%@ include file="/templates/admin/inc/leftbar.jsp" %>
@@ -58,6 +60,21 @@
                                         <label for="name">Fullname</label>
                                         <input type="text" id="fullname" value="<%if(fullname!=null) out.print(fullname); %>" name="fullname" class="form-control" />
                                     </div>
+                                    <%
+                                    	List<Granted> listGranted = (List<Granted>) request.getAttribute("listGranted");
+                                        	if(listGranted!=null && listGranted.size()>0){
+                                    %>
+                                    <div class="form-group">
+                                    	<label for="name">Chọn chức danh</label>
+                                    	<select name="idGranted">
+			                               <%
+			                               for(Granted objGranted: listGranted){
+			                               %>
+			                               <option value="<%=objGranted.getId()%>" <%if(objGranted.getId()==3) out.print("selected"); %>><%=objGranted.getName()%></option>
+			                               <%} %>
+		                              </select>
+                                    </div>
+                                    <%} %>
                                     <button type="submit" name="submit" class="btn btn-success btn-md">Thêm</button>
                                 </form>
                             </div>
