@@ -69,6 +69,7 @@ public class AdminAddUserController extends HttpServlet {
 		List<Granted> listGranted = grantedDAO.findAll();
 
 		request.setAttribute("listGranted", listGranted);
+		request.setAttribute("idGranted", idGranted);
 		// VALIDATE DỮ LIỆU
 		if ("".equals(username)) {
 			RequestDispatcher rd = request.getRequestDispatcher("/views/admin/user/add.jsp?msg=1");

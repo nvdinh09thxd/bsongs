@@ -58,8 +58,8 @@
 												src="<%=request.getContextPath()%>/uploads/images/<%if(objGranted.getDel()) out.print("tick.png"); else out.print("cancel.png");%>"
 												style="width: 45px; height: 45px; text-align: center;"></a>
 										</td>
-										<%}}} %>
 									</tr>
+										<%}}} %>
 								</tbody>
 							</table>
 
@@ -94,7 +94,7 @@
 	});
 </script>
 <script>
-	document.getElementById("dencent").classList.add('active-menu');
+	document.getElementById("granted").classList.add('active-menu');
 </script>
 <!-- /. PAGE INNER  -->
 <%@ include file="/templates/admin/inc/footer.jsp"%>

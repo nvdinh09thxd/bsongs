@@ -16,6 +16,7 @@
         					<%
 	        					String username = request.getParameter("username");
 	        					String fullname = request.getParameter("fullname");
+	        					int granted = request.getAttribute("idGranted") != null? (Integer) request.getAttribute("idGranted"):3;
 								if(request.getParameter("msg")!=null){
 									String msg = request.getParameter("msg");
 									if("1".equals(msg)){
@@ -70,7 +71,7 @@
 			                               <%
 			                               for(Granted objGranted: listGranted){
 			                               %>
-			                               <option value="<%=objGranted.getId()%>" <%if(objGranted.getId()==3) out.print("selected"); %>><%=objGranted.getName()%></option>
+			                               <option value="<%=objGranted.getId()%>" <%if(objGranted.getId()==granted) out.print("selected"); %>><%=objGranted.getName()%></option>
 			                               <%} %>
 		                              </select>
                                     </div>
