@@ -65,7 +65,7 @@ public class AdminIndexSongController extends HttpServlet {
 				out.print("<td>" + song.getId() + "</td>");
 				out.print("<td class='center'>" + song.getName() + "</td>");
 				out.print("<td class='center'>" + song.getCat().getName() + "</td>");
-				out.print("<td class='center'>" + song.getCount() + "</td>");
+				out.print("<td class='center'>" + song.getCounter() + "</td>");
 				out.print("<td class='center'><img width='200px' height='200px' src=" + urlPicture + " alt="
 						+ urlPicture + " />");
 				String styleButton = !userLogin.getGranted().getEdit() && !userLogin.getGranted().getDel()

@@ -21,7 +21,6 @@ public class CatDAO extends AbstractDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			// response.sendRidrect... (ve nha xu ly)
 		} finally {
 			DBConnectionUtil.close(rs, st, con);
 		}
@@ -74,7 +73,7 @@ public class CatDAO extends AbstractDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			DBConnectionUtil.close(pst, con);
+			DBConnectionUtil.close(rs, pst, con);
 		}
 		return cat;
 	}

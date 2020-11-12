@@ -29,7 +29,7 @@
     %>
     <div class="article">
       <h2><a href="<%=urlSlug %>" title="<%=item.getName() %>"><%=item.getName() %></a></h2>
-      <p class="infopost">Ngày đăng: <%=item.getCreateAt() %>. Lượt xem: <%=item.getCount() %> <a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>" class="com"><span><%=i %></span></a></p>
+      <p class="infopost">Ngày đăng: <%=item.getCreateAt() %>. Lượt xem: <%=item.getCounter() %> <a href="<%=request.getContextPath() %>/detail?id=<%=item.getId() %>" class="com"><span><%=i %></span></a></p>
       <div class="clr"></div>
       <div class="img">
       	<img src="<%=urlPicture %>" width="177" height="213" alt="<%=urlPicture %>" class="fl" />

@@ -11,7 +11,7 @@
     <div class="article">
       <h1><%=itemSong.getName() %></h1>
       <div class="clr"></div>
-      <p>Ngày đăng: <%=itemSong.getCreateAt() %>. Lượt xem: <%=itemSong.getCount() %></p>
+      <p>Ngày đăng: <%=itemSong.getCreateAt() %>. Lượt xem: <%=itemSong.getCounter() %></p>
       <div class="vnecontent">
           <%=itemSong.getDetail() %>
       </div>

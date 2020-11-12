@@ -107,10 +107,9 @@
                                         <td><%=song.getId() %></td>
                                         <td class="center"><%=song.getName() %></td>
                                         <td class="center"><%=song.getCat().getName() %></td>
-                                        <td class="center"><%=song.getCount() %></td>
+                                        <td class="center"><%=song.getCounter() %></td>
                                         <td class="center">
-                                        <img width="200px" height="200px" 
-											src="<%=urlPicture%>" alt="<%=urlPicture%>" />
+                                        	<img width="200px" height="200px" src="<%=urlPicture%>" alt="<%=urlPicture%>" />
                                         </td>
                                         <td class="center" style="<%if(!userLogin.getGranted().getEdit() && !userLogin.getGranted().getDel()) out.print("display: none");%>">
                                             <a href="<%=urlEdit %>" title="Sửa" class="btn btn-primary"

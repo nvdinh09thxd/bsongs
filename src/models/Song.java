@@ -16,7 +16,7 @@ public class Song {
 	private String detail;
 	private Timestamp createAt;
 	private String picture;
-	private int count;
+	private int counter;
 	private Category cat;
 
 	public Song(String name, String description, String detail, String picture, Category cat) {
